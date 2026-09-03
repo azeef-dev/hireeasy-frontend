@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { Mail, Send, Heart, Sparkles } from 'lucide-react';
 
 const FOOTER_LINKS = {
   'For customers': [
@@ -62,8 +63,14 @@ export default function Footer() {
     <footer className="mt-20 border-t border-brand-ink/5 bg-white">
       {/* CTA strip */}
       <div className="relative overflow-hidden bg-brand-indigo">
-        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-brand-marigold/20 blur-3xl" aria-hidden />
-        <div className="pointer-events-none absolute -bottom-20 left-10 h-56 w-56 rounded-full bg-brand-teal/20 blur-3xl" aria-hidden />
+        <div
+          className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-brand-marigold/20 blur-3xl"
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute -bottom-20 left-10 h-56 w-56 rounded-full bg-brand-teal/20 blur-3xl"
+          aria-hidden
+        />
         <div className="relative mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 py-10 text-center sm:flex-row sm:text-left">
           <div>
             <p className="text-xl font-bold text-white">Need something done around the house?</p>
@@ -79,26 +86,38 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto max-w-6xl px-5 py-14">
-        {/* Newsletter */}
+        {/* Newsletter Box */}
         <div className="flex flex-col items-center justify-between gap-5 rounded-3xl bg-brand-paper p-6 sm:flex-row sm:p-8">
           <div>
-            <p className="text-lg font-bold text-brand-ink">Get handy tips & offers 💌</p>
-            <p className="mt-1 text-sm text-brand-ink/55">Once in a while, no spam — just useful stuff for your home.</p>
+            <div className="flex items-center gap-2">
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-marigold/20 text-brand-ink">
+                <Sparkles size={18} className="text-[#a35e00]" />
+              </span>
+              <p className="text-lg font-bold text-brand-ink">Get handy tips & offers</p>
+            </div>
+            <p className="mt-1 text-sm text-brand-ink/55">
+              Once in a while, no spam — just useful stuff for your home.
+            </p>
           </div>
-          <form onSubmit={handleSubscribe} className="flex w-full max-w-sm gap-2 sm:w-auto">
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              className="input-field w-full flex-1"
-            />
+
+          <form onSubmit={handleSubscribe} className="flex w-full max-w-md items-center gap-2">
+            <div className="relative flex-1">
+              <Mail size={18} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-ink/35" />
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="w-full rounded-2xl border border-brand-ink/10 bg-white py-3 pl-10 pr-4 text-sm text-brand-ink placeholder:text-brand-ink/35 focus:border-brand-marigold focus:outline-none focus:ring-2 focus:ring-brand-marigold/20"
+              />
+            </div>
             <button
               type="submit"
-              className="shrink-0 rounded-xl bg-brand-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo"
+              className="inline-flex items-center gap-2 shrink-0 rounded-2xl bg-brand-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo"
             >
-              Subscribe
+              <span>Subscribe</span>
+              <Send size={15} />
             </button>
           </form>
         </div>
@@ -153,8 +172,8 @@ export default function Footer() {
 
         <div className="mt-6 flex flex-col items-center justify-between gap-3 text-xs text-brand-ink/45 sm:flex-row">
           <p>© {new Date().getFullYear()} HireEasy. All rights reserved.</p>
-          <p className="flex items-center gap-1">
-            Made with <span className="text-brand-coral">♥</span> in Karachi
+          <p className="flex items-center gap-1.5">
+            Made with <Heart size={13} className="fill-brand-coral text-brand-coral inline" /> in Karachi
           </p>
         </div>
       </div>
