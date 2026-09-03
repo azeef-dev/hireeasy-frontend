@@ -92,7 +92,7 @@ export default function Navbar() {
                   </Dropdown.Item>
                   <Dropdown.Item
                     id="logout"
-                    className="cursor-pointer rounded-xl px-3 py-2 text-sm text-brand-coral data-[hovered]:bg-brand-coral/10 data-focused:bg-brand-coral/10"
+                    className="cursor-pointer rounded-xl px-3 py-2 text-sm text-brand-coral data-hovered:bg-brand-coral/10 data-focused:bg-brand-coral/10"
                   >
                     Log out
                   </Dropdown.Item>
