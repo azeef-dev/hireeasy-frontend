@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import ScrollToTop from './components/ScrollToTop';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -11,6 +12,10 @@ import ProviderDetails from './pages/ProviderDetails';
 import CustomerDashboard from './pages/CustomerDashboard';
 import ProviderDashboard from './pages/ProviderDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import HowItWorks from './pages/HowItWorks';
+import FAQ from './pages/FAQ';
 import NotFound from './pages/NotFound';
 
 const KNOWN_ROUTES = [
@@ -21,6 +26,10 @@ const KNOWN_ROUTES = [
   '/dashboard',
   '/provider/dashboard',
   '/admin/dashboard',
+  '/about',
+  '/contact',
+  '/how-it-works',
+  '/faq',
 ];
 
 export default function App() {
@@ -29,6 +38,7 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-brand-paper">
+      <ScrollToTop />
       <Toaster
         position="top-center"
         toastOptions={{
@@ -48,6 +58,10 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/providers/:id" element={<ProviderDetails />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route
             path="/dashboard"
             element={
