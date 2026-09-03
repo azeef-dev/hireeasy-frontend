@@ -82,7 +82,7 @@ export default function Navbar() {
                 </span>
                 <span className="hidden text-sm font-medium text-brand-ink sm:inline">{user.name?.split(' ')[0]}</span>
               </Dropdown.Trigger>
-              <Dropdown.Popover className="min-w-[190px] rounded-2xl border border-brand-ink/10 bg-white p-1.5 shadow-lg">
+              <Dropdown.Popover className="min-w-47.5 rounded-2xl border border-brand-ink/10 bg-white p-1.5 shadow-lg">
                 <Dropdown.Menu onAction={handleAction}>
                   <Dropdown.Item
                     id="dashboard"
