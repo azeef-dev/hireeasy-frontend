@@ -1,22 +1,24 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const FOOTER_LINKS = {
   'For customers': [
     { label: 'Browse providers', href: '/' },
-    { label: 'How it works', href: '#how-it-works' },
+    { label: 'How it works', href: '/how-it-works' },
     { label: 'Track a booking', href: '/dashboard' },
-    { label: 'Help & support', href: '#' },
+    { label: 'FAQs', href: '/faq' },
   ],
   'For providers': [
     { label: 'Become a provider', href: '/register' },
     { label: 'Provider dashboard', href: '/provider/dashboard' },
-    { label: 'Success stories', href: '#' },
+    { label: 'How it works', href: '/how-it-works' },
   ],
   Company: [
-    { label: 'About us', href: '#' },
-    { label: 'Contact', href: '#' },
-    { label: 'Privacy policy', href: '#' },
-    { label: 'Terms of service', href: '#' },
+    { label: 'About us', href: '/about' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'Privacy policy', href: '/contact' },
+    { label: 'Terms of service', href: '/contact' },
   ],
 };
 
@@ -47,13 +49,24 @@ const SOCIAL_LINKS = [
 ];
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (!email) return;
+    toast.success("You're on the list! We'll keep you posted.");
+    setEmail('');
+  };
+
   return (
     <footer className="mt-20 border-t border-brand-ink/5 bg-white">
       {/* CTA strip */}
-      <div className="bg-brand-indigo">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 text-center sm:flex-row sm:text-left">
+      <div className="relative overflow-hidden bg-brand-indigo">
+        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-brand-marigold/20 blur-3xl" aria-hidden />
+        <div className="pointer-events-none absolute -bottom-20 left-10 h-56 w-56 rounded-full bg-brand-teal/20 blur-3xl" aria-hidden />
+        <div className="relative mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-5 py-10 text-center sm:flex-row sm:text-left">
           <div>
-            <p className="text-lg font-bold text-white">Need something done around the house?</p>
+            <p className="text-xl font-bold text-white">Need something done around the house?</p>
             <p className="mt-1 text-sm text-white/70">Browse verified providers and book in a couple of taps.</p>
           </div>
           <Link
@@ -66,7 +79,31 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto max-w-6xl px-5 py-14">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        {/* Newsletter */}
+        <div className="flex flex-col items-center justify-between gap-5 rounded-3xl bg-brand-paper p-6 sm:flex-row sm:p-8">
+          <div>
+            <p className="text-lg font-bold text-brand-ink">Get handy tips & offers 💌</p>
+            <p className="mt-1 text-sm text-brand-ink/55">Once in a while, no spam — just useful stuff for your home.</p>
+          </div>
+          <form onSubmit={handleSubscribe} className="flex w-full max-w-sm gap-2 sm:w-auto">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="input-field w-full flex-1"
+            />
+            <button
+              type="submit"
+              className="shrink-0 rounded-xl bg-brand-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+
+        <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Brand column */}
           <div>
             <Link to="/" className="flex items-center gap-2">
@@ -76,8 +113,8 @@ export default function Footer() {
               <span className="text-lg font-bold tracking-tight text-brand-ink">HireEasy</span>
             </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-brand-ink/55">
-              Book trusted local help — plumbers, electricians, cleaners and more — without the
-              endless WhatsApp forwards.
+              Book trusted local help — plumbers, electricians, cleaners and more — without the endless WhatsApp
+              forwards.
             </p>
             <div className="mt-5 flex gap-2">
               {SOCIAL_LINKS.map((s) => (
@@ -102,15 +139,9 @@ export default function Footer() {
               <ul className="mt-3 flex flex-col gap-2.5">
                 {links.map((l) => (
                   <li key={l.label}>
-                    {l.href.startsWith('/') ? (
-                      <Link to={l.href} className="text-sm text-brand-ink/55 transition hover:text-brand-indigo">
-                        {l.label}
-                      </Link>
-                    ) : (
-                      <a href={l.href} className="text-sm text-brand-ink/55 transition hover:text-brand-indigo">
-                        {l.label}
-                      </a>
-                    )}
+                    <Link to={l.href} className="text-sm text-brand-ink/55 transition hover:text-brand-indigo">
+                      {l.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -127,6 +158,6 @@ export default function Footer() {
           </p>
         </div>
       </div>
-    </footer >
+    </footer>
   );
 }
