@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
 
 const CONTACT_INFO = [
-    { label: 'Email us', value: 'support@hireeasy.com', icon: '✉️' },
-    { label: 'Call us', value: '+92 300 1234567', icon: '📞' },
-    { label: 'Visit us', value: 'Shahrah-e-Faisal, Karachi', icon: '📍' },
+    { label: 'Email us', value: 'support@hireeasy.com', Icon: Mail, color: '#2B2F79' },
+    { label: 'Call us', value: '+92 300 1234567', Icon: Phone, color: '#0F9B8E' },
+    { label: 'Visit us', value: 'Shahrah-e-Faisal, Karachi', Icon: MapPin, color: '#F0553F' },
 ];
 
 export default function Contact() {
@@ -17,7 +18,6 @@ export default function Contact() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitting(true);
-        // No backend endpoint for contact yet — simulate a submission.
         setTimeout(() => {
             toast.success("Message sent! We'll get back to you soon.");
             setForm({ name: '', email: '', message: '' });
@@ -33,9 +33,12 @@ export default function Contact() {
                     <span className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold text-white/80">
                         Contact us
                     </span>
-                    <h1 className="mt-4 text-3xl font-bold text-white sm:text-4xl">We'd love to hear from you</h1>
+                    <h1 className="mt-4 text-3xl font-bold text-white sm:text-4xl">
+                        We'd love to hear from you
+                    </h1>
                     <p className="mt-3 text-white/70">
-                        Questions, feedback, or partnership ideas — drop us a line and we'll respond within a business day.
+                        Questions, feedback, or partnership ideas — drop us a line and we'll respond within a
+                        business day.
                     </p>
                 </div>
             </section>
@@ -47,8 +50,11 @@ export default function Contact() {
                         <div className="mt-8 flex flex-col gap-4">
                             {CONTACT_INFO.map((c) => (
                                 <div key={c.label} className="flex items-center gap-4 rounded-2xl bg-white p-4 shadow-sm">
-                                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-marigold/15 text-xl">
-                                        {c.icon}
+                                    <span
+                                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+                                        style={{ backgroundColor: `${c.color}1A` }}
+                                    >
+                                        <c.Icon size={20} style={{ color: c.color }} strokeWidth={1.8} />
                                     </span>
                                     <div>
                                         <p className="text-xs text-brand-ink/45">{c.label}</p>
@@ -62,7 +68,13 @@ export default function Contact() {
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4 rounded-3xl bg-white p-8 shadow-sm">
                         <label className="flex flex-col gap-1.5">
                             <span className="text-sm font-medium text-brand-ink">Full name</span>
-                            <input required value={form.name} onChange={update('name')} className="input-field" placeholder="Your name" />
+                            <input
+                                required
+                                value={form.name}
+                                onChange={update('name')}
+                                className="input-field"
+                                placeholder="Your name"
+                            />
                         </label>
                         <label className="flex flex-col gap-1.5">
                             <span className="text-sm font-medium text-brand-ink">Email</span>
