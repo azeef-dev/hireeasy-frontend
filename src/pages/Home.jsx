@@ -78,7 +78,6 @@ export default function Home() {
         <div className="pointer-events-none absolute -bottom-32 left-1/3 h-80 w-80 rounded-full bg-brand-teal/20 blur-3xl" aria-hidden />
 
         <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-5 py-16 sm:py-20 lg:grid-cols-2 lg:py-24">
-          {/* Left: illustration */}
           <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
             <div className="relative w-full max-w-md">
               <div className="pointer-events-none absolute -inset-6 rounded-[2rem] bg-white/5" aria-hidden />
@@ -93,7 +92,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right: copy + search */}
           <div className="order-1 lg:order-2">
             <span className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold text-white/80">
               Trusted by 12,000+ customers
