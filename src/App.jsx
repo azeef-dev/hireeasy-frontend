@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation, matchPath } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -13,7 +13,20 @@ import ProviderDashboard from './pages/ProviderDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import NotFound from './pages/NotFound';
 
+const KNOWN_ROUTES = [
+  '/',
+  '/login',
+  '/register',
+  '/providers/:id',
+  '/dashboard',
+  '/provider/dashboard',
+  '/admin/dashboard',
+];
+
 export default function App() {
+  const location = useLocation();
+  const isKnownRoute = KNOWN_ROUTES.some((path) => matchPath(path, location.pathname));
+
   return (
     <div className="flex min-h-screen flex-col bg-brand-paper">
       <Toaster
@@ -28,7 +41,7 @@ export default function App() {
           error: { iconTheme: { primary: '#F0553F', secondary: '#fff' } },
         }}
       />
-      <Navbar />
+      {isKnownRoute && <Navbar />}
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -62,7 +75,7 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      <Footer />
+      {isKnownRoute && <Footer />}
     </div>
   );
 }
