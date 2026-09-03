@@ -70,7 +70,7 @@ export default function Home() {
               value={category}
               options={categoryOptions}
               onChange={setCategory}
-              className="!bg-brand-paper sm:!bg-brand-paper"
+              className="bg-brand-paper! sm:bg-brand-paper!"
             />
           </div>
 
