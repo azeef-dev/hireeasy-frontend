@@ -86,7 +86,7 @@ export default function Navbar() {
                 <Dropdown.Menu onAction={handleAction}>
                   <Dropdown.Item
                     id="dashboard"
-                    className="cursor-pointer rounded-xl px-3 py-2 text-sm capitalize text-brand-ink data-hovered:bg-brand-paper data-[focused]:bg-brand-paper"
+                    className="cursor-pointer rounded-xl px-3 py-2 text-sm capitalize text-brand-ink data-hovered:bg-brand-paper data-focused:bg-brand-paper"
                   >
                     {user.role === 'user' ? 'My bookings' : `${user.role} dashboard`}
                   </Dropdown.Item>
