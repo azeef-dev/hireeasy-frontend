@@ -25,8 +25,23 @@ import {
   Sparkles,
   Star,
   TrendingUp,
+  AlertCircle,
+  FileText,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import CategorySelect from '../components/CategorySelect';
+import {
+  validateName,
+  validateEmail,
+  validatePassword,
+  validatePhone,
+  validateCategory,
+  validateRequiredText,
+  validateNumber,
+  sanitizePhoneInput,
+  sanitizeDigitsInput,
+  isFormValid,
+} from '../utils/validators';
 
 const CATEGORY_SUGGESTIONS = [
   'Electrical',
@@ -58,6 +73,7 @@ export default function Register() {
   const [role, setRole] = useState('user');
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const [form, setForm] = useState({
     name: '',
@@ -71,13 +87,86 @@ export default function Register() {
     bio: '',
   });
 
-  const update = (field) => (e) => setForm({ ...form, [field]: e.target.value });
+  const update = (field) => (e) => {
+    setForm({ ...form, [field]: e.target.value });
+    if (errors[field]) setErrors({ ...errors, [field]: '' });
+  };
+
+  const updatePhone = (e) => {
+    setForm({ ...form, phone: sanitizePhoneInput(e.target.value) });
+    if (errors.phone) setErrors({ ...errors, phone: '' });
+  };
+
+  const updateNumberField = (field) => (e) => {
+    setForm({ ...form, [field]: sanitizeDigitsInput(e.target.value) });
+    if (errors[field]) setErrors({ ...errors, [field]: '' });
+  };
+
+  const updateCategory = (value) => {
+    setForm({ ...form, serviceCategory: value });
+    if (errors.serviceCategory) setErrors({ ...errors, serviceCategory: '' });
+  };
+
+  const validateFieldByName = (field, value) => {
+    switch (field) {
+      case 'name':
+        return validateName(value);
+      case 'email':
+        return validateEmail(value);
+      case 'password':
+        return validatePassword(value);
+      case 'phone':
+        return validatePhone(value, false);
+      case 'serviceCategory':
+        return role === 'provider' ? validateCategory(value) : '';
+      case 'location':
+        return role === 'provider' ? validateRequiredText(value, 'Location', 2, 80) : '';
+      case 'experience':
+        return role === 'provider' ? validateNumber(value, 'Experience', { min: 0, max: 60 }) : '';
+      case 'price':
+        return role === 'provider' ? validateNumber(value, 'Starting price', { min: 0, max: 1000000 }) : '';
+      case 'bio':
+        if (role === 'provider' && value.trim()) {
+          return validateRequiredText(value, 'Bio', 10, 500);
+        }
+        return '';
+      default:
+        return '';
+    }
+  };
+
+  const handleBlur = (field) => () => {
+    setErrors((prev) => ({ ...prev, [field]: validateFieldByName(field, form[field]) }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const fieldsToCheck = ['name', 'email', 'password', 'phone'];
+    if (role === 'provider') {
+      fieldsToCheck.push('serviceCategory', 'location', 'experience', 'price', 'bio');
+    }
+
+    const newErrors = {};
+    fieldsToCheck.forEach((field) => {
+      newErrors[field] = validateFieldByName(field, form[field]);
+    });
+    setErrors(newErrors);
+
+    if (!isFormValid(newErrors)) {
+      toast.error('Please fix the highlighted fields');
+      return;
+    }
+
     setSubmitting(true);
     try {
-      const payload = { ...form, role };
+      const payload = {
+        ...form,
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim(),
+        role,
+      };
       if (role === 'user') {
         delete payload.serviceCategory;
         delete payload.experience;
@@ -85,6 +174,8 @@ export default function Register() {
         delete payload.location;
         delete payload.bio;
       } else {
+        payload.location = payload.location.trim();
+        payload.bio = payload.bio.trim();
         payload.experience = payload.experience ? Number(payload.experience) : undefined;
         payload.price = payload.price ? Number(payload.price) : undefined;
       }
@@ -102,6 +193,13 @@ export default function Register() {
       setSubmitting(false);
     }
   };
+
+  const errorText = (field) =>
+    errors[field] ? (
+      <span className="flex items-center gap-1 text-xs text-brand-coral">
+        <AlertCircle size={12} /> {errors[field]}
+      </span>
+    ) : null;
 
   return (
     <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
@@ -175,8 +273,8 @@ export default function Register() {
             )}
           </div>
 
-          {/* Avatar stack — visual filler, relevant to trades */}
-          <div className="relative z-10 mt-6 flex items-center gap-3 rounded-2xl bg-white/5 p-4">
+          {/* Avatar stack — visual filler */}
+          <div className="relative z-10 mt-5 flex items-center gap-3 rounded-2xl bg-white/5 p-4">
             <div className="flex -space-x-3">
               {AVATAR_ICONS.map(({ Icon, bg }, i) => (
                 <span
@@ -194,7 +292,7 @@ export default function Register() {
           </div>
 
           {/* Quick stats row */}
-          <div className="relative z-10 mt-6 grid grid-cols-3 gap-3">
+          <div className="relative z-10 mt-5 grid grid-cols-3 gap-3">
             {QUICK_STATS.map((s) => (
               <div key={s.label} className="rounded-xl bg-white/5 px-3 py-3 text-center">
                 <s.Icon size={16} className="mx-auto text-brand-marigold" />
@@ -202,6 +300,23 @@ export default function Register() {
                 <p className="text-[10px] text-white/60">{s.label}</p>
               </div>
             ))}
+          </div>
+
+          {/* Category chips — fills remaining space, relevant for signup */}
+          <div className="relative z-10 mt-5 rounded-2xl bg-white/5 p-4">
+            <p className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-white/50">
+              Popular categories on HireEasy
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {CATEGORY_SUGGESTIONS.map((c) => (
+                <span
+                  key={c}
+                  className="rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white/80"
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
           </div>
 
           <div className="relative z-10 mt-auto flex items-center gap-2 pt-6 text-xs text-white/60">
@@ -268,7 +383,7 @@ export default function Register() {
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
               {/* Name & Phone */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="flex flex-col gap-1.5">
@@ -278,13 +393,17 @@ export default function Register() {
                   <div className="relative flex items-center">
                     <User size={17} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
                     <input
-                      required
                       value={form.name}
                       onChange={update('name')}
-                      className="w-full rounded-xl border border-brand-ink/10 bg-brand-paper/50 py-2.5 pl-10 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:border-brand-marigold focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-marigold/20"
+                      onBlur={handleBlur('name')}
+                      className={`w-full rounded-xl border bg-brand-paper/50 py-2.5 pl-10 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:bg-white focus:outline-none focus:ring-2 ${errors.name
+                        ? 'border-brand-coral focus:ring-brand-coral/20'
+                        : 'border-brand-ink/10 focus:border-brand-marigold focus:ring-brand-marigold/20'
+                        }`}
                       placeholder="Ali Raza"
                     />
                   </div>
+                  {errorText('name')}
                 </div>
 
                 <div className="flex flex-col gap-1.5">
@@ -295,11 +414,17 @@ export default function Register() {
                     <Phone size={17} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
                     <input
                       value={form.phone}
-                      onChange={update('phone')}
-                      className="w-full rounded-xl border border-brand-ink/10 bg-brand-paper/50 py-2.5 pl-10 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:border-brand-marigold focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-marigold/20"
+                      onChange={updatePhone}
+                      onBlur={handleBlur('phone')}
+                      inputMode="tel"
+                      className={`w-full rounded-xl border bg-brand-paper/50 py-2.5 pl-10 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:bg-white focus:outline-none focus:ring-2 ${errors.phone
+                        ? 'border-brand-coral focus:ring-brand-coral/20'
+                        : 'border-brand-ink/10 focus:border-brand-marigold focus:ring-brand-marigold/20'
+                        }`}
                       placeholder="0300-1234567"
                     />
                   </div>
+                  {errorText('phone')}
                 </div>
               </div>
 
@@ -312,13 +437,17 @@ export default function Register() {
                   <Mail size={17} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
                   <input
                     type="email"
-                    required
                     value={form.email}
                     onChange={update('email')}
-                    className="w-full rounded-xl border border-brand-ink/10 bg-brand-paper/50 py-2.5 pl-10 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:border-brand-marigold focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-marigold/20"
+                    onBlur={handleBlur('email')}
+                    className={`w-full rounded-xl border bg-brand-paper/50 py-2.5 pl-10 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:bg-white focus:outline-none focus:ring-2 ${errors.email
+                      ? 'border-brand-coral focus:ring-brand-coral/20'
+                      : 'border-brand-ink/10 focus:border-brand-marigold focus:ring-brand-marigold/20'
+                      }`}
                     placeholder="you@example.com"
                   />
                 </div>
+                {errorText('email')}
               </div>
 
               {/* Password */}
@@ -330,11 +459,13 @@ export default function Register() {
                   <Lock size={17} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    required
-                    minLength={6}
                     value={form.password}
                     onChange={update('password')}
-                    className="w-full rounded-xl border border-brand-ink/10 bg-brand-paper/50 py-2.5 pl-10 pr-11 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:border-brand-marigold focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-marigold/20"
+                    onBlur={handleBlur('password')}
+                    className={`w-full rounded-xl border bg-brand-paper/50 py-2.5 pl-10 pr-11 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:bg-white focus:outline-none focus:ring-2 ${errors.password
+                      ? 'border-brand-coral focus:ring-brand-coral/20'
+                      : 'border-brand-ink/10 focus:border-brand-marigold focus:ring-brand-marigold/20'
+                      }`}
                     placeholder="At least 6 characters"
                   />
                   <button
@@ -346,6 +477,7 @@ export default function Register() {
                     {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
                   </button>
                 </div>
+                {errorText('password')}
               </div>
 
               {/* Provider Extra Fields */}
@@ -361,19 +493,14 @@ export default function Register() {
                       <label className="text-xs font-semibold text-brand-ink/70">
                         SERVICE CATEGORY
                       </label>
-                      <input
-                        required
-                        list="category-suggestions"
+                      <CategorySelect
                         value={form.serviceCategory}
-                        onChange={update('serviceCategory')}
-                        className="input-field"
+                        onChange={updateCategory}
+                        options={CATEGORY_SUGGESTIONS}
                         placeholder="e.g. Electrical"
+                        error={errors.serviceCategory}
                       />
-                      <datalist id="category-suggestions">
-                        {CATEGORY_SUGGESTIONS.map((c) => (
-                          <option key={c} value={c} />
-                        ))}
-                      </datalist>
+                      {errorText('serviceCategory')}
                     </div>
 
                     <div className="flex flex-col gap-1.5">
@@ -385,10 +512,15 @@ export default function Register() {
                         <input
                           value={form.location}
                           onChange={update('location')}
-                          className="w-full rounded-xl border border-brand-ink/10 bg-white py-2.5 pl-8 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 focus:outline-none focus:ring-2 focus:ring-brand-marigold"
+                          onBlur={handleBlur('location')}
+                          className={`w-full rounded-xl border bg-white py-2.5 pl-8 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 focus:outline-none focus:ring-2 ${errors.location
+                            ? 'border-brand-coral focus:ring-brand-coral/20'
+                            : 'border-brand-ink/10 focus:ring-brand-marigold'
+                            }`}
                           placeholder="e.g. Gulshan, Karachi"
                         />
                       </div>
+                      {errorText('location')}
                     </div>
                   </div>
 
@@ -400,14 +532,18 @@ export default function Register() {
                       <div className="relative flex items-center">
                         <Clock size={15} className="pointer-events-none absolute left-3 text-brand-ink/35" />
                         <input
-                          type="number"
-                          min="0"
                           value={form.experience}
-                          onChange={update('experience')}
-                          className="w-full rounded-xl border border-brand-ink/10 bg-white py-2.5 pl-8 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 focus:outline-none focus:ring-2 focus:ring-brand-marigold"
+                          onChange={updateNumberField('experience')}
+                          onBlur={handleBlur('experience')}
+                          inputMode="numeric"
+                          className={`w-full rounded-xl border bg-white py-2.5 pl-8 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 focus:outline-none focus:ring-2 ${errors.experience
+                            ? 'border-brand-coral focus:ring-brand-coral/20'
+                            : 'border-brand-ink/10 focus:ring-brand-marigold'
+                            }`}
                           placeholder="3"
                         />
                       </div>
+                      {errorText('experience')}
                     </div>
 
                     <div className="flex flex-col gap-1.5">
@@ -417,14 +553,18 @@ export default function Register() {
                       <div className="relative flex items-center">
                         <DollarSign size={15} className="pointer-events-none absolute left-3 text-brand-ink/35" />
                         <input
-                          type="number"
-                          min="0"
                           value={form.price}
-                          onChange={update('price')}
-                          className="w-full rounded-xl border border-brand-ink/10 bg-white py-2.5 pl-8 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 focus:outline-none focus:ring-2 focus:ring-brand-marigold"
+                          onChange={updateNumberField('price')}
+                          onBlur={handleBlur('price')}
+                          inputMode="numeric"
+                          className={`w-full rounded-xl border bg-white py-2.5 pl-8 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 focus:outline-none focus:ring-2 ${errors.price
+                            ? 'border-brand-coral focus:ring-brand-coral/20'
+                            : 'border-brand-ink/10 focus:ring-brand-marigold'
+                            }`}
                           placeholder="1500"
                         />
                       </div>
+                      {errorText('price')}
                     </div>
                   </div>
 
@@ -432,13 +572,21 @@ export default function Register() {
                     <label className="text-xs font-semibold text-brand-ink/70">
                       SHORT BIO
                     </label>
-                    <textarea
-                      rows={2}
-                      value={form.bio}
-                      onChange={update('bio')}
-                      className="w-full resize-none rounded-xl border border-brand-ink/10 bg-white p-3 text-sm text-brand-ink placeholder:text-brand-ink/35 focus:outline-none focus:ring-2 focus:ring-brand-marigold"
-                      placeholder="Tell customers about your skills..."
-                    />
+                    <div className="relative">
+                      <FileText size={15} className="pointer-events-none absolute left-3 top-3 text-brand-ink/35" />
+                      <textarea
+                        rows={2}
+                        value={form.bio}
+                        onChange={update('bio')}
+                        onBlur={handleBlur('bio')}
+                        className={`w-full resize-none rounded-xl border bg-white py-2.5 pl-8 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 focus:outline-none focus:ring-2 ${errors.bio
+                          ? 'border-brand-coral focus:ring-brand-coral/20'
+                          : 'border-brand-ink/10 focus:ring-brand-marigold'
+                          }`}
+                        placeholder="Tell customers about your skills..."
+                      />
+                    </div>
+                    {errorText('bio')}
                   </div>
 
                   <div className="flex items-start gap-2 text-[11px] leading-relaxed text-[#a35e00]">
@@ -484,4 +632,4 @@ export default function Register() {
       </div>
     </div>
   );
-} 
+}
