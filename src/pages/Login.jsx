@@ -14,8 +14,11 @@ import {
   CheckCircle2,
   LogIn,
   AlertCircle,
+  Send,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import Modal from '../components/Modal';
+import { forgotPassword } from '../api/auth';
 import { validateEmail, validatePassword, isFormValid } from '../utils/validators';
 
 const DASHBOARD_PATH = {
@@ -32,6 +35,12 @@ export default function Login() {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  const [forgotOpen, setForgotOpen] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotError, setForgotError] = useState('');
+  const [forgotSubmitting, setForgotSubmitting] = useState(false);
+  const [forgotSent, setForgotSent] = useState(false);
 
   const validateField = (field, value) => {
     if (field === 'email') return validateEmail(value);
@@ -71,6 +80,30 @@ export default function Login() {
       toast.error(err.message);
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const closeForgotModal = () => {
+    setForgotOpen(false);
+    setForgotEmail('');
+    setForgotError('');
+    setForgotSent(false);
+  };
+
+  const handleForgotSubmit = async (e) => {
+    e.preventDefault();
+    const error = validateEmail(forgotEmail);
+    setForgotError(error);
+    if (error) return;
+
+    setForgotSubmitting(true);
+    try {
+      await forgotPassword(forgotEmail.trim());
+      setForgotSent(true);
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setForgotSubmitting(false);
     }
   };
 
@@ -200,9 +233,13 @@ export default function Login() {
                   <label className="text-xs font-semibold tracking-wide text-brand-ink/70">
                     PASSWORD
                   </label>
-                  <span className="text-xs text-brand-indigo hover:underline cursor-pointer">
+                  <button
+                    type="button"
+                    onClick={() => setForgotOpen(true)}
+                    className="text-xs text-brand-indigo hover:underline cursor-pointer"
+                  >
                     Forgot password?
-                  </span>
+                  </button>
                 </div>
                 <div className="relative flex items-center">
                   <Lock size={18} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
@@ -265,6 +302,72 @@ export default function Login() {
           </div>
         </div>
       </div>
+
+      <Modal open={forgotOpen} onClose={closeForgotModal} title="Reset your password">
+        {forgotSent ? (
+          <div className="flex flex-col items-center gap-3 py-2 text-center">
+            <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-teal/15 text-brand-teal">
+              <CheckCircle2 size={24} />
+            </span>
+            <p className="text-sm text-brand-ink/70">
+              If an account exists for <span className="font-semibold text-brand-ink">{forgotEmail}</span>, we've
+              sent a password reset link to it.
+            </p>
+            <button
+              type="button"
+              onClick={closeForgotModal}
+              className="mt-2 rounded-full bg-brand-ink px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-indigo"
+            >
+              Done
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleForgotSubmit} className="flex flex-col gap-4">
+            <p className="text-sm text-brand-ink/55">
+              Enter the email linked to your account and we'll send you a link to reset your password.
+            </p>
+            <div className="flex flex-col gap-1.5">
+              <label className="text-xs font-semibold tracking-wide text-brand-ink/70">EMAIL ADDRESS</label>
+              <div className="relative flex items-center">
+                <Mail size={17} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
+                <input
+                  type="email"
+                  value={forgotEmail}
+                  onChange={(e) => {
+                    setForgotEmail(e.target.value);
+                    if (forgotError) setForgotError('');
+                  }}
+                  className={`w-full rounded-xl border bg-brand-paper/50 py-2.5 pl-10 pr-3 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:bg-white focus:outline-none focus:ring-2 ${forgotError
+                    ? 'border-brand-coral focus:ring-brand-coral/20'
+                    : 'border-brand-ink/10 focus:border-brand-marigold focus:ring-brand-marigold/20'
+                    }`}
+                  placeholder="name@example.com"
+                />
+              </div>
+              {forgotError && (
+                <span className="flex items-center gap-1 text-xs text-brand-coral">
+                  <AlertCircle size={12} /> {forgotError}
+                </span>
+              )}
+            </div>
+            <button
+              type="submit"
+              disabled={forgotSubmitting}
+              className="mt-1 flex items-center justify-center gap-2 rounded-full bg-brand-ink py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {forgotSubmitting ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" /> Sending…
+                </>
+              ) : (
+                <>
+                  <Send size={15} /> Send reset link
+                </>
+              )}
+            </button>
+          </form>
+        )}
+      </Modal>
     </div>
   );
 }
