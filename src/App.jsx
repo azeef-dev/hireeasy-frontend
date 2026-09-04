@@ -8,6 +8,7 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ResetPassword from './pages/ResetPassword';
 import ProviderDetails from './pages/ProviderDetails';
 import CustomerDashboard from './pages/CustomerDashboard';
 import ProviderDashboard from './pages/ProviderDashboard';
@@ -22,6 +23,7 @@ const KNOWN_ROUTES = [
   '/',
   '/login',
   '/register',
+  '/reset-password/:token',
   '/providers/:id',
   '/dashboard',
   '/provider/dashboard',
@@ -57,6 +59,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/providers/:id" element={<ProviderDetails />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
