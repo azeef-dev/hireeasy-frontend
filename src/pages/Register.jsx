@@ -27,6 +27,11 @@ import {
   TrendingUp,
   AlertCircle,
   FileText,
+  UserPlus,
+  BadgeCheck,
+  Banknote,
+  Search,
+  CalendarCheck,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import CategorySelect from '../components/CategorySelect';
@@ -65,6 +70,18 @@ const QUICK_STATS = [
   { Icon: Users, value: '500+', label: 'Providers' },
   { Icon: Star, value: '4.8', label: 'Avg. rating' },
   { Icon: TrendingUp, value: '12k+', label: 'Bookings' },
+];
+
+const PROVIDER_STEPS = [
+  { Icon: UserPlus, title: 'Create your profile', desc: 'Add your category, area and pricing' },
+  { Icon: BadgeCheck, title: 'Get verified', desc: 'Admin review, usually within 24 hours' },
+  { Icon: Banknote, title: 'Start earning', desc: 'Accept bookings and get paid directly' },
+];
+
+const CUSTOMER_STEPS = [
+  { Icon: Search, title: 'Find a pro', desc: 'Search or browse by category near you' },
+  { Icon: CalendarCheck, title: 'Book instantly', desc: 'Pick a date, time and place — done' },
+  { Icon: Star, title: 'Rate the job', desc: 'Leave a review once the work is complete' },
 ];
 
 export default function Register() {
@@ -201,6 +218,8 @@ export default function Register() {
       </span>
     ) : null;
 
+  const steps = role === 'provider' ? PROVIDER_STEPS : CUSTOMER_STEPS;
+
   return (
     <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
       <div className="grid w-full overflow-hidden rounded-3xl bg-white shadow-[0_20px_50px_rgba(23,25,51,0.08)] lg:grid-cols-2">
@@ -215,113 +234,137 @@ export default function Register() {
             aria-hidden
           />
 
-          <div className="relative z-10">
-            <Link to="/" className="inline-flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-base font-bold text-brand-indigo shadow-md">
-                H
-              </span>
-              <span className="text-xl font-bold tracking-tight text-white">HireEasy</span>
-            </Link>
-
-            <h2 className="mt-8 text-3xl font-bold leading-tight text-white">
-              {role === 'user'
-                ? 'Join 12,000+ happy homeowners across Pakistan.'
-                : 'Turn your skills into steady, daily income.'}
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-white/70">
-              {role === 'user'
-                ? 'Say goodbye to unreliable handymen. Book verified pros with transparent pricing and live status tracking.'
-                : 'Get discovered by customers looking for your exact service. No upfront bidding fees, no hidden cuts.'}
-            </p>
-          </div>
-
-          {/* Perks list */}
-          <div className="relative z-10 mt-6 space-y-3 rounded-2xl bg-white/10 p-5 backdrop-blur-md">
-            <p className="text-xs font-semibold uppercase tracking-wider text-brand-marigold">
-              {role === 'user' ? 'Customer Benefits' : 'Provider Perks'}
-            </p>
-            {role === 'user' ? (
-              <>
-                <div className="flex items-center gap-2.5 text-xs text-white/90">
-                  <CheckCircle size={15} className="shrink-0 text-brand-teal" />
-                  <span>Free browsing and upfront starting rates</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-xs text-white/90">
-                  <CheckCircle size={15} className="shrink-0 text-brand-teal" />
-                  <span>Real ratings from real completed bookings</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-xs text-white/90">
-                  <CheckCircle size={15} className="shrink-0 text-brand-teal" />
-                  <span>One-click booking tracker from requested to done</span>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="flex items-center gap-2.5 text-xs text-white/90">
-                  <CheckCircle size={15} className="shrink-0 text-brand-teal" />
-                  <span>Direct customer bookings in your local area</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-xs text-white/90">
-                  <CheckCircle size={15} className="shrink-0 text-brand-teal" />
-                  <span>Official verified pro badge after quick review</span>
-                </div>
-                <div className="flex items-center gap-2.5 text-xs text-white/90">
-                  <CheckCircle size={15} className="shrink-0 text-brand-teal" />
-                  <span>Manage quotes, status and timings from one dashboard</span>
-                </div>
-              </>
-            )}
-          </div>
-
-          {/* Avatar stack — visual filler */}
-          <div className="relative z-10 mt-5 flex items-center gap-3 rounded-2xl bg-white/5 p-4">
-            <div className="flex -space-x-3">
-              {AVATAR_ICONS.map(({ Icon, bg }, i) => (
-                <span
-                  key={i}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-brand-indigo"
-                  style={{ backgroundColor: bg }}
-                >
-                  <Icon size={15} className="text-white" strokeWidth={2} />
+          <div className="relative z-10 flex flex-1 flex-col gap-6">
+            <div>
+              <Link to="/" className="inline-flex items-center gap-2">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-base font-bold text-brand-indigo shadow-md">
+                  H
                 </span>
-              ))}
-            </div>
-            <p className="text-xs leading-snug text-white/75">
-              Electricians, plumbers, painters &amp; cleaners already growing with HireEasy.
-            </p>
-          </div>
+                <span className="text-xl font-bold tracking-tight text-white">HireEasy</span>
+              </Link>
 
-          {/* Quick stats row */}
-          <div className="relative z-10 mt-5 grid grid-cols-3 gap-3">
-            {QUICK_STATS.map((s) => (
-              <div key={s.label} className="rounded-xl bg-white/5 px-3 py-3 text-center">
-                <s.Icon size={16} className="mx-auto text-brand-marigold" />
-                <p className="mt-1.5 text-sm font-bold text-white">{s.value}</p>
-                <p className="text-[10px] text-white/60">{s.label}</p>
+              <h2 className="mt-8 text-3xl font-bold leading-tight text-white">
+                {role === 'user'
+                  ? 'Join 12,000+ happy homeowners across Pakistan.'
+                  : 'Turn your skills into steady, daily income.'}
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
+                {role === 'user'
+                  ? 'Say goodbye to unreliable handymen. Book verified pros with transparent pricing and live status tracking.'
+                  : 'Get discovered by customers looking for your exact service. No upfront bidding fees, no hidden cuts.'}
+              </p>
+            </div>
+
+            {/* Perks list */}
+            <div className="space-y-3 rounded-2xl bg-white/10 p-5 backdrop-blur-md">
+              <p className="text-xs font-semibold uppercase tracking-wider text-brand-marigold">
+                {role === 'user' ? 'Customer Benefits' : 'Provider Perks'}
+              </p>
+              {role === 'user' ? (
+                <>
+                  <div className="flex items-center gap-2.5 text-xs text-white/90">
+                    <CheckCircle size={15} className="shrink-0 text-brand-teal" />
+                    <span>Free browsing and upfront starting rates</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 text-xs text-white/90">
+                    <CheckCircle size={15} className="shrink-0 text-brand-teal" />
+                    <span>Real ratings from real completed bookings</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 text-xs text-white/90">
+                    <CheckCircle size={15} className="shrink-0 text-brand-teal" />
+                    <span>One-click booking tracker from requested to done</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-2.5 text-xs text-white/90">
+                    <CheckCircle size={15} className="shrink-0 text-brand-teal" />
+                    <span>Direct customer bookings in your local area</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 text-xs text-white/90">
+                    <CheckCircle size={15} className="shrink-0 text-brand-teal" />
+                    <span>Official verified pro badge after quick review</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 text-xs text-white/90">
+                    <CheckCircle size={15} className="shrink-0 text-brand-teal" />
+                    <span>Manage quotes, status and timings from one dashboard</span>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Avatar stack — visual filler */}
+            <div className="flex items-center gap-3 rounded-2xl bg-white/5 p-4">
+              <div className="flex -space-x-3">
+                {AVATAR_ICONS.map(({ Icon, bg }, i) => (
+                  <span
+                    key={i}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-brand-indigo"
+                    style={{ backgroundColor: bg }}
+                  >
+                    <Icon size={15} className="text-white" strokeWidth={2} />
+                  </span>
+                ))}
               </div>
-            ))}
-          </div>
+              <p className="text-xs leading-snug text-white/75">
+                Electricians, plumbers, painters &amp; cleaners already growing with HireEasy.
+              </p>
+            </div>
 
-          {/* Category chips — fills remaining space, relevant for signup */}
-          <div className="relative z-10 mt-5 rounded-2xl bg-white/5 p-4">
-            <p className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-white/50">
-              Popular categories on HireEasy
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {CATEGORY_SUGGESTIONS.map((c) => (
-                <span
-                  key={c}
-                  className="rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white/80"
-                >
-                  {c}
-                </span>
+            {/* Quick stats row */}
+            <div className="grid grid-cols-3 gap-3">
+              {QUICK_STATS.map((s) => (
+                <div key={s.label} className="rounded-xl bg-white/5 px-3 py-3 text-center">
+                  <s.Icon size={16} className="mx-auto text-brand-marigold" />
+                  <p className="mt-1.5 text-sm font-bold text-white">{s.value}</p>
+                  <p className="text-[10px] text-white/60">{s.label}</p>
+                </div>
               ))}
             </div>
-          </div>
 
-          <div className="relative z-10 mt-auto flex items-center gap-2 pt-6 text-xs text-white/60">
-            <ShieldCheck size={16} className="text-brand-teal" />
-            <span>Fast verification • Strict privacy protection</span>
+            {/* Category chips */}
+            <div className="rounded-2xl bg-white/5 p-4">
+              <p className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-white/50">
+                Popular categories on HireEasy
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {CATEGORY_SUGGESTIONS.map((c) => (
+                  <span
+                    key={c}
+                    className="rounded-full bg-white/10 px-3 py-1.5 text-[11px] font-medium text-white/80"
+                  >
+                    {c}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Get started in 3 steps — fills remaining space, always relevant */}
+            <div className="flex-1 rounded-2xl bg-white/5 p-5">
+              <p className="mb-4 text-[11px] font-semibold uppercase tracking-wider text-white/50">
+                Get started in 3 steps
+              </p>
+              <div className="space-y-4">
+                {steps.map((step, i) => (
+                  <div key={step.title} className="flex items-start gap-3">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10">
+                      <step.Icon size={16} className="text-brand-marigold" strokeWidth={2} />
+                    </span>
+                    <div>
+                      <p className="text-xs font-semibold text-white">
+                        {i + 1}. {step.title}
+                      </p>
+                      <p className="mt-0.5 text-[11px] text-white/60">{step.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 text-xs text-white/60">
+              <ShieldCheck size={16} className="text-brand-teal" />
+              <span>Fast verification • Strict privacy protection</span>
+            </div>
           </div>
         </div>
 
