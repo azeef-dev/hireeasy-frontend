@@ -13,8 +13,10 @@ import {
   Loader2,
   CheckCircle2,
   LogIn,
+  AlertCircle,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { validateEmail, validatePassword, isFormValid } from '../utils/validators';
 
 const DASHBOARD_PATH = {
   user: '/dashboard',
@@ -27,14 +29,42 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: '', password: '' });
+  const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
+  const validateField = (field, value) => {
+    if (field === 'email') return validateEmail(value);
+    if (field === 'password') return validatePassword(value);
+    return '';
+  };
+
+  const handleChange = (field) => (e) => {
+    const value = e.target.value;
+    setForm({ ...form, [field]: value });
+    if (errors[field]) setErrors({ ...errors, [field]: '' });
+  };
+
+  const handleBlur = (field) => () => {
+    setErrors({ ...errors, [field]: validateField(field, form[field]) });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const newErrors = {
+      email: validateEmail(form.email),
+      password: validatePassword(form.password),
+    };
+    setErrors(newErrors);
+    if (!isFormValid(newErrors)) {
+      toast.error('Please fix the errors before continuing');
+      return;
+    }
+
     setSubmitting(true);
     try {
-      const data = await login(form.email, form.password);
+      const data = await login(form.email.trim(), form.password);
       toast.success(`Welcome back, ${data.name.split(' ')[0]}!`);
       navigate(DASHBOARD_PATH[data.role] || '/');
     } catch (err) {
@@ -92,7 +122,26 @@ export default function Login() {
             <p className="mt-2 text-xs font-semibold text-white/80">— Ayesha K., Karachi</p>
           </div>
 
-          <div className="relative z-10 mt-auto flex items-center gap-6 pt-8 text-xs text-white/60">
+          {/* Feature checklist — fills remaining space */}
+          <div className="relative z-10 mt-6 space-y-3 rounded-2xl bg-white/5 p-5">
+            <p className="text-xs font-semibold uppercase tracking-wider text-brand-marigold">
+              Why customers stay
+            </p>
+            <div className="flex items-center gap-2.5 text-xs text-white/85">
+              <CheckCircle2 size={15} className="shrink-0 text-brand-teal" />
+              <span>Every provider manually vetted before going live</span>
+            </div>
+            <div className="flex items-center gap-2.5 text-xs text-white/85">
+              <CheckCircle2 size={15} className="shrink-0 text-brand-teal" />
+              <span>See exact booking status, no guessing games</span>
+            </div>
+            <div className="flex items-center gap-2.5 text-xs text-white/85">
+              <CheckCircle2 size={15} className="shrink-0 text-brand-teal" />
+              <span>Only real, post-job reviews influence ratings</span>
+            </div>
+          </div>
+
+          <div className="relative z-10 mt-auto flex items-center gap-6 pt-6 text-xs text-white/60">
             <span className="flex items-center gap-1.5">
               <ShieldCheck size={15} className="text-brand-teal" /> 100% Vetted Pros
             </span>
@@ -118,7 +167,7 @@ export default function Login() {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
               {/* Email */}
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-semibold tracking-wide text-brand-ink/70">
@@ -128,13 +177,21 @@ export default function Login() {
                   <Mail size={18} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
                   <input
                     type="email"
-                    required
                     value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full rounded-xl border border-brand-ink/10 bg-brand-paper/50 py-2.5 pl-11 pr-4 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:border-brand-marigold focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-marigold/20"
+                    onChange={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    className={`w-full rounded-xl border bg-brand-paper/50 py-2.5 pl-11 pr-4 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:bg-white focus:outline-none focus:ring-2 ${errors.email
+                      ? 'border-brand-coral focus:ring-brand-coral/20'
+                      : 'border-brand-ink/10 focus:border-brand-marigold focus:ring-brand-marigold/20'
+                      }`}
                     placeholder="name@example.com"
                   />
                 </div>
+                {errors.email && (
+                  <span className="flex items-center gap-1 text-xs text-brand-coral">
+                    <AlertCircle size={12} /> {errors.email}
+                  </span>
+                )}
               </div>
 
               {/* Password */}
@@ -151,10 +208,13 @@ export default function Login() {
                   <Lock size={18} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
                   <input
                     type={showPassword ? 'text' : 'password'}
-                    required
                     value={form.password}
-                    onChange={(e) => setForm({ ...form, password: e.target.value })}
-                    className="w-full rounded-xl border border-brand-ink/10 bg-brand-paper/50 py-2.5 pl-11 pr-11 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:border-brand-marigold focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-marigold/20"
+                    onChange={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    className={`w-full rounded-xl border bg-brand-paper/50 py-2.5 pl-11 pr-11 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:bg-white focus:outline-none focus:ring-2 ${errors.password
+                      ? 'border-brand-coral focus:ring-brand-coral/20'
+                      : 'border-brand-ink/10 focus:border-brand-marigold focus:ring-brand-marigold/20'
+                      }`}
                     placeholder="••••••••"
                   />
                   <button
@@ -166,6 +226,11 @@ export default function Login() {
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
+                {errors.password && (
+                  <span className="flex items-center gap-1 text-xs text-brand-coral">
+                    <AlertCircle size={12} /> {errors.password}
+                  </span>
+                )}
               </div>
 
               {/* Submit Button */}
