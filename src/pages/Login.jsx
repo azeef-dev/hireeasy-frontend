@@ -12,6 +12,7 @@ import {
   Sparkles,
   Loader2,
   CheckCircle2,
+  LogIn,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -44,10 +45,10 @@ export default function Login() {
   };
 
   return (
-    <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-6xl items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
-      <div className="grid w-full overflow-hidden rounded-3xl bg-white shadow-[0_20px_50px_rgba(23,25,51,0.08)] lg:grid-cols-12">
+    <div className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
+      <div className="grid w-full overflow-hidden rounded-3xl bg-white shadow-[0_20px_50px_rgba(23,25,51,0.08)] lg:grid-cols-2">
         {/* ── Left Showcase Panel ── */}
-        <div className="relative hidden flex-col justify-between overflow-hidden bg-brand-indigo p-10 text-white lg:col-span-5 lg:flex">
+        <div className="relative hidden flex-col overflow-hidden bg-brand-indigo p-9 text-white lg:flex">
           <div
             className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-brand-marigold/20 blur-3xl"
             aria-hidden
@@ -65,7 +66,7 @@ export default function Login() {
               <span className="text-xl font-bold tracking-tight text-white">HireEasy</span>
             </Link>
 
-            <div className="mt-12 inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white/90 backdrop-blur">
+            <div className="mt-10 inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white/90 backdrop-blur">
               <Sparkles size={14} className="text-brand-marigold" />
               <span>Verified Home Services</span>
             </div>
@@ -79,7 +80,7 @@ export default function Login() {
           </div>
 
           {/* Mini Testimonial Quote */}
-          <div className="relative z-10 rounded-2xl bg-white/10 p-5 backdrop-blur-md">
+          <div className="relative z-10 mt-8 rounded-2xl bg-white/10 p-5 backdrop-blur-md">
             <div className="flex items-center gap-1 text-brand-marigold">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} size={14} fill="#FFB020" />
@@ -91,7 +92,7 @@ export default function Login() {
             <p className="mt-2 text-xs font-semibold text-white/80">— Ayesha K., Karachi</p>
           </div>
 
-          <div className="relative z-10 flex items-center gap-6 pt-4 text-xs text-white/60">
+          <div className="relative z-10 mt-auto flex items-center gap-6 pt-8 text-xs text-white/60">
             <span className="flex items-center gap-1.5">
               <ShieldCheck size={15} className="text-brand-teal" /> 100% Vetted Pros
             </span>
@@ -102,14 +103,15 @@ export default function Login() {
         </div>
 
         {/* ── Right Form Panel ── */}
-        <div className="flex flex-col justify-center px-6 py-10 sm:px-12 lg:col-span-7 lg:py-16">
-          <div className="mx-auto w-full max-w-md">
+        <div className="flex flex-col justify-center px-6 py-10 sm:px-10 lg:py-14">
+          <div className="mx-auto w-full max-w-sm">
             <div className="mb-8">
               <span className="inline-block rounded-full bg-brand-marigold/15 px-3 py-1 text-xs font-semibold text-[#a35e00] lg:hidden">
                 HireEasy
               </span>
-              <h1 className="mt-2 text-2xl font-bold tracking-tight text-brand-ink sm:text-3xl">
-                Welcome back! 👋
+              <h1 className="mt-2 flex items-center gap-2 text-2xl font-bold tracking-tight text-brand-ink sm:text-3xl">
+                Welcome back!
+                <LogIn size={22} className="text-brand-marigold" strokeWidth={2.2} />
               </h1>
               <p className="mt-1.5 text-sm text-brand-ink/55">
                 Enter your credentials to access your account.
@@ -129,7 +131,7 @@ export default function Login() {
                     required
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full rounded-xl border border-brand-ink/10 bg-brand-paper/50 py-3 pl-11 pr-4 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:border-brand-marigold focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-marigold/20"
+                    className="w-full rounded-xl border border-brand-ink/10 bg-brand-paper/50 py-2.5 pl-11 pr-4 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:border-brand-marigold focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-marigold/20"
                     placeholder="name@example.com"
                   />
                 </div>
@@ -152,7 +154,7 @@ export default function Login() {
                     required
                     value={form.password}
                     onChange={(e) => setForm({ ...form, password: e.target.value })}
-                    className="w-full rounded-xl border border-brand-ink/10 bg-brand-paper/50 py-3 pl-11 pr-11 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:border-brand-marigold focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-marigold/20"
+                    className="w-full rounded-xl border border-brand-ink/10 bg-brand-paper/50 py-2.5 pl-11 pr-11 text-sm text-brand-ink placeholder:text-brand-ink/35 transition focus:border-brand-marigold focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-marigold/20"
                     placeholder="••••••••"
                   />
                   <button
@@ -170,7 +172,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="group mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-ink py-3.5 text-sm font-semibold text-white shadow-lg shadow-brand-ink/10 transition hover:bg-brand-indigo hover:shadow-brand-indigo/20 disabled:cursor-not-allowed disabled:opacity-60"
+                className="group mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-ink py-3 text-sm font-semibold text-white shadow-lg shadow-brand-ink/10 transition hover:bg-brand-indigo hover:shadow-brand-indigo/20 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {submitting ? (
                   <>
