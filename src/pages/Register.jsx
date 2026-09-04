@@ -19,6 +19,12 @@ import {
   Users,
   Loader2,
   Rocket,
+  Info,
+  Zap,
+  PaintBucket,
+  Sparkles,
+  Star,
+  TrendingUp,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -31,6 +37,19 @@ const CATEGORY_SUGGESTIONS = [
   'Tutoring',
   'Appliance Repair',
   'Gardening',
+];
+
+const AVATAR_ICONS = [
+  { Icon: Zap, bg: '#FFB020' },
+  { Icon: Wrench, bg: '#47BFFF' },
+  { Icon: PaintBucket, bg: '#F0553F' },
+  { Icon: Sparkles, bg: '#0F9B8E' },
+];
+
+const QUICK_STATS = [
+  { Icon: Users, value: '500+', label: 'Providers' },
+  { Icon: Star, value: '4.8', label: 'Avg. rating' },
+  { Icon: TrendingUp, value: '12k+', label: 'Bookings' },
 ];
 
 export default function Register() {
@@ -106,7 +125,7 @@ export default function Register() {
               <span className="text-xl font-bold tracking-tight text-white">HireEasy</span>
             </Link>
 
-            <h2 className="mt-10 text-3xl font-bold leading-tight text-white">
+            <h2 className="mt-8 text-3xl font-bold leading-tight text-white">
               {role === 'user'
                 ? 'Join 12,000+ happy homeowners across Pakistan.'
                 : 'Turn your skills into steady, daily income.'}
@@ -119,7 +138,7 @@ export default function Register() {
           </div>
 
           {/* Perks list */}
-          <div className="relative z-10 mt-8 space-y-3 rounded-2xl bg-white/10 p-5 backdrop-blur-md">
+          <div className="relative z-10 mt-6 space-y-3 rounded-2xl bg-white/10 p-5 backdrop-blur-md">
             <p className="text-xs font-semibold uppercase tracking-wider text-brand-marigold">
               {role === 'user' ? 'Customer Benefits' : 'Provider Perks'}
             </p>
@@ -156,7 +175,36 @@ export default function Register() {
             )}
           </div>
 
-          <div className="relative z-10 mt-auto flex items-center gap-2 pt-8 text-xs text-white/60">
+          {/* Avatar stack — visual filler, relevant to trades */}
+          <div className="relative z-10 mt-6 flex items-center gap-3 rounded-2xl bg-white/5 p-4">
+            <div className="flex -space-x-3">
+              {AVATAR_ICONS.map(({ Icon, bg }, i) => (
+                <span
+                  key={i}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-brand-indigo"
+                  style={{ backgroundColor: bg }}
+                >
+                  <Icon size={15} className="text-white" strokeWidth={2} />
+                </span>
+              ))}
+            </div>
+            <p className="text-xs leading-snug text-white/75">
+              Electricians, plumbers, painters &amp; cleaners already growing with HireEasy.
+            </p>
+          </div>
+
+          {/* Quick stats row */}
+          <div className="relative z-10 mt-6 grid grid-cols-3 gap-3">
+            {QUICK_STATS.map((s) => (
+              <div key={s.label} className="rounded-xl bg-white/5 px-3 py-3 text-center">
+                <s.Icon size={16} className="mx-auto text-brand-marigold" />
+                <p className="mt-1.5 text-sm font-bold text-white">{s.value}</p>
+                <p className="text-[10px] text-white/60">{s.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="relative z-10 mt-auto flex items-center gap-2 pt-6 text-xs text-white/60">
             <ShieldCheck size={16} className="text-brand-teal" />
             <span>Fast verification • Strict privacy protection</span>
           </div>
@@ -393,9 +441,13 @@ export default function Register() {
                     />
                   </div>
 
-                  <p className="text-[11px] leading-relaxed text-[#a35e00]/90">
-                    ℹ️ Provider accounts are activated after a quick manual admin review to maintain high community trust.
-                  </p>
+                  <div className="flex items-start gap-2 text-[11px] leading-relaxed text-[#a35e00]">
+                    <Info size={14} className="mt-0.5 shrink-0" strokeWidth={2} />
+                    <span>
+                      Provider accounts are activated after a quick manual admin review to
+                      maintain high community trust.
+                    </span>
+                  </div>
                 </div>
               )}
 
@@ -432,4 +484,4 @@ export default function Register() {
       </div>
     </div>
   );
-}
+} 
