@@ -167,7 +167,7 @@ export default function Register() {
           <div className="mx-auto w-full max-w-lg">
             <div className="mb-6">
               <h1 className="text-2xl font-bold tracking-tight text-brand-ink sm:text-3xl">
-                Create an account
+                Create an account 🚀
               </h1>
               <p className="mt-1 text-sm text-brand-ink/55">
                 Select your account type to get started.
