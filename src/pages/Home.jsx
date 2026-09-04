@@ -10,6 +10,7 @@ import {
   BadgeDollarSign,
   MessageSquare,
   Zap,
+  ArrowRight,
 } from 'lucide-react';
 import { getProviders, getCategories } from '../api/providers';
 import ProviderCard from '../components/ProviderCard';
@@ -198,8 +199,12 @@ export default function Home() {
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Link to="/how-it-works" className="text-sm font-semibold text-brand-indigo hover:underline">
-              Learn more about how HireEasy works →
+            <Link
+              to="/how-it-works"
+              className="inline-flex items-center gap-1.5 rounded-full bg-brand-indigo/10 px-5 py-2.5 text-sm font-semibold text-brand-indigo transition hover:bg-brand-indigo/15"
+            >
+              Learn more about how HireEasy works
+              <ArrowRight size={15} />
             </Link>
           </div>
         </div>
@@ -283,8 +288,12 @@ export default function Home() {
             <FaqAccordion items={FAQS.slice(0, 4)} />
           </div>
           <div className="mt-6 text-center">
-            <Link to="/faq" className="text-sm font-semibold text-brand-indigo hover:underline">
-              View all FAQs →
+            <Link
+              to="/faq"
+              className="inline-flex items-center gap-1.5 rounded-full bg-brand-indigo/10 px-5 py-2.5 text-sm font-semibold text-brand-indigo transition hover:bg-brand-indigo/15"
+            >
+              View all FAQs
+              <ArrowRight size={15} />
             </Link>
           </div>
         </div>
