@@ -85,27 +85,15 @@ export default function Home() {
 
   return (
     <div>
-      {/* ── HERO ── */}
+      {/* ── HERO (Left: Text, Right: Image) ── */}
       <section className="relative overflow-hidden bg-brand-indigo">
-        <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-brand-marigold/20 blur-3xl" aria-hidden />
-        <div className="pointer-events-none absolute -bottom-32 left-1/3 h-80 w-80 rounded-full bg-brand-teal/20 blur-3xl" aria-hidden />
+        <div className="pointer-events-none absolute -left-24 -top-24 h-96 w-96 rounded-full bg-brand-marigold/20 blur-3xl" aria-hidden />
+        <div className="pointer-events-none absolute -bottom-32 right-1/4 h-80 w-80 rounded-full bg-brand-teal/20 blur-3xl" aria-hidden />
 
         <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-5 py-16 sm:py-20 lg:grid-cols-2 lg:py-24">
-          {/* Left — illustration */}
-          <div className="order-2 flex justify-center lg:order-1 lg:justify-start">
-            <div className="relative w-full max-w-md">
-              <div className="pointer-events-none absolute -inset-6 rounded-[2rem] bg-white/5" aria-hidden />
-              <img
-                src="/images/hero-team.png"
-                alt="Team of verified service professionals"
-                className="relative w-full drop-shadow-2xl"
-                onError={(e) => { e.currentTarget.style.display = 'none'; }}
-              />
-            </div>
-          </div>
 
-          {/* Right — copy + search */}
-          <div className="order-1 lg:order-2">
+          {/* ── Left: Copy + Search + Stats ── */}
+          <div className="flex flex-col items-start text-left">
             <span className="inline-block rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold text-white/80">
               Trusted by 12,000+ customers
             </span>
@@ -113,11 +101,11 @@ export default function Home() {
               Skip the WhatsApp forwards.
             </h1>
             <p className="mt-4 max-w-md text-lg text-white/70">
-              Book a local service pro who's rated, priced upfront, and trackable from request to
-              done — no more chasing numbers someone's cousin gave you.
+              Book a local service pro who&apos;s rated, priced upfront, and trackable from request to
+              done — no more chasing numbers someone&apos;s cousin gave you.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 rounded-2xl bg-white p-3 shadow-xl sm:flex-row sm:items-center">
+            <div className="mt-8 flex w-full max-w-xl flex-col gap-3 rounded-2xl bg-white p-3 shadow-xl sm:flex-row sm:items-center">
               <div className="flex flex-1 items-center gap-2 rounded-xl bg-brand-paper px-3 sm:bg-transparent">
                 <Search size={16} className="shrink-0 text-brand-ink/40" />
                 <input
@@ -141,7 +129,7 @@ export default function Home() {
               </button>
             </div>
 
-            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <div className="mt-8 grid w-full grid-cols-2 gap-4 sm:grid-cols-4">
               {STATS.map((s) => (
                 <div key={s.label}>
                   <p className="text-xl font-bold text-white sm:text-2xl">{s.value}</p>
@@ -150,6 +138,20 @@ export default function Home() {
               ))}
             </div>
           </div>
+
+          {/* ── Right: Team Illustration ── */}
+          <div className="flex justify-center lg:justify-end">
+            <div className="relative w-full max-w-lg">
+              <div className="pointer-events-none absolute -inset-6 rounded-[2.5rem] bg-white/5" aria-hidden />
+              <img
+                src="/images/hero-team.png"
+                alt="Team of verified service professionals"
+                className="relative w-full drop-shadow-2xl"
+                onError={(e) => { e.currentTarget.style.display = 'none'; }}
+              />
+            </div>
+          </div>
+
         </div>
       </section>
 
