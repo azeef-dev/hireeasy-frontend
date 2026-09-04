@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { ArrowRight } from 'lucide-react';
 import { getMyBookings } from '../api/bookings';
 import { createReview } from '../api/reviews';
 import BookingCard from '../components/BookingCard';
@@ -71,8 +72,12 @@ export default function CustomerDashboard() {
         ) : filtered.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-brand-ink/15 bg-white py-16 text-center">
             <p className="font-medium text-brand-ink">No bookings here yet</p>
-            <Link to="/" className="mt-2 inline-block text-sm font-semibold text-brand-indigo">
-              Browse providers →
+            <Link
+              to="/"
+              className="mt-4 inline-flex items-center gap-2 rounded-full bg-brand-ink px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-indigo"
+            >
+              Browse providers
+              <ArrowRight size={15} />
             </Link>
           </div>
         ) : (
