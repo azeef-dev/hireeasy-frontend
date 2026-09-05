@@ -141,12 +141,14 @@ export default function AdminLayout() {
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-coral/15 text-brand-coral">
                             <LogOut size={18} />
                         </span>
-                        <p className="pt-2 text-sm text-brand-ink/65">Are you sure you want to log out of your account?</p>
+                        <p className="pt-2 text-sm text-brand-ink/65">
+                            Are you sure you want to log out of your account? You'll need to sign in again to continue.
+                        </p>
                     </div>
                     <div className="flex gap-2">
                         <button
                             onClick={() => setLogoutConfirmOpen(false)}
-                            className="flex-1 rounded-full border border-brand-ink/10 py-2.5 text-sm font-semibold text-brand-ink cursor-pointer"
+                            className="flex-1 rounded-full border border-brand-ink/10 py-2.5 text-sm font-semibold text-brand-ink transition hover:bg-brand-ink/5 cursor-pointer"
                         >
                             Cancel
                         </button>
