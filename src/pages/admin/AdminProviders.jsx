@@ -192,7 +192,7 @@ export default function AdminProviders() {
                                         <button
                                             disabled={busyId === p._id}
                                             onClick={() => decide(p._id, true)}
-                                            className="flex items-center gap-1 rounded-full bg-brand-teal px-3.5 py-2 text-xs font-semibold text-white disabled:opacity-50"
+                                            className="flex items-center gap-1 rounded-full bg-brand-teal px-3.5 py-2 text-xs font-semibold text-white disabled:opacity-50 cursor-pointer"
                                         >
                                             <Check size={13} /> Approve
                                         </button>
@@ -209,7 +209,7 @@ export default function AdminProviders() {
                                     <button
                                         disabled={busyId === p._id}
                                         onClick={() => toggleActive(p)}
-                                        className={`flex items-center gap-1 rounded-full px-3.5 py-2 text-xs font-semibold disabled:opacity-50 ${p.isActive ? 'bg-brand-coral/10 text-brand-coral' : 'bg-brand-teal/10 text-brand-teal'}`}
+                                        className={`cursor-pointer flex items-center gap-1 rounded-full px-3.5 py-2 text-xs font-semibold disabled:opacity-50 ${p.isActive ? 'bg-brand-coral/10 text-brand-coral' : 'bg-brand-teal/10 text-brand-teal'}`}
                                     >
                                         {p.isActive ? <ShieldOff size={13} /> : <ShieldCheck size={13} />}
                                         {p.isActive ? 'Deactivate' : 'Activate'}

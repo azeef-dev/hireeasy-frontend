@@ -135,14 +135,14 @@ export default function AdminCustomers() {
                                     <button
                                         disabled={busyId === c._id}
                                         onClick={() => toggleActive(c)}
-                                        className={`flex items-center gap-1 rounded-full px-3.5 py-2 text-xs font-semibold disabled:opacity-50 ${c.isActive ? 'bg-brand-coral/10 text-brand-coral' : 'bg-brand-teal/10 text-brand-teal'}`}
+                                        className={`cursor-pointer flex items-center gap-1 rounded-full px-3.5 py-2 text-xs font-semibold disabled:opacity-50 ${c.isActive ? 'bg-brand-coral/10 text-brand-coral' : 'bg-brand-teal/10 text-brand-teal'}`}
                                     >
                                         {c.isActive ? <ShieldOff size={13} /> : <ShieldCheck size={13} />}
                                         {c.isActive ? 'Deactivate' : 'Activate'}
                                     </button>
                                     <button
                                         onClick={() => openEdit(c)}
-                                        className="flex items-center gap-1 rounded-full border border-brand-ink/10 px-3.5 py-2 text-xs font-semibold text-brand-ink hover:border-brand-ink/25"
+                                        className="flex items-center gap-1 rounded-full border border-brand-ink/10 px-3.5 py-2 text-xs font-semibold text-brand-ink hover:border-brand-ink/25 cursor-pointer"
                                     >
                                         <Pencil size={13} /> Edit
                                     </button>

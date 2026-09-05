@@ -190,7 +190,7 @@ export default function AdminAdmins() {
                                         <button
                                             disabled={isSelf || busyId === a._id}
                                             onClick={() => toggleActive(a)}
-                                            className={`flex items-center gap-1 rounded-full px-3.5 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-40 ${a.isActive ? 'bg-brand-coral/10 text-brand-coral' : 'bg-brand-teal/10 text-brand-teal'}`}
+                                            className={`cursor-pointer flex items-center gap-1 rounded-full px-3.5 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-40 ${a.isActive ? 'bg-brand-coral/10 text-brand-coral' : 'bg-brand-teal/10 text-brand-teal'}`}
                                         >
                                             {a.isActive ? <ShieldOff size={13} /> : <ShieldCheck size={13} />}
                                             {a.isActive ? 'Deactivate' : 'Activate'}
