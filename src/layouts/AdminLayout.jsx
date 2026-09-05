@@ -15,7 +15,7 @@ import { useAuth } from '../context/AuthContext';
 import Modal from '../components/Modal';
 
 const NAV_ITEMS = [
-    { to: '/admin/dashboard', label: 'Overview', Icon: LayoutDashboard, end: true },
+    { to: '/admin/dashboard', label: 'Dashboard', Icon: LayoutDashboard, end: true },
     { to: '/admin/dashboard/providers', label: 'Providers', Icon: Wrench },
     { to: '/admin/dashboard/customers', label: 'Customers', Icon: Users },
     { to: '/admin/dashboard/bookings', label: 'Bookings', Icon: CalendarCheck },

@@ -43,7 +43,7 @@ export default function AdminOverview() {
 
     return (
         <div>
-            <h1 className="text-2xl font-bold text-brand-ink">Overview</h1>
+            <h1 className="text-2xl font-bold text-brand-ink">Dashboard</h1>
             <p className="mt-1 text-sm text-brand-ink/50">A snapshot of everything happening on HireEasy.</p>
 
             <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
