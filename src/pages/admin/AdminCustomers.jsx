@@ -148,7 +148,7 @@ export default function AdminCustomers() {
                                     </button>
                                     <button
                                         onClick={() => setDeleteTarget(c)}
-                                        className="flex items-center gap-1 rounded-full bg-brand-coral/10 px-3.5 py-2 text-xs font-semibold text-brand-coral hover:bg-brand-coral/20"
+                                        className="flex items-center gap-1 rounded-full bg-brand-coral/10 px-3.5 py-2 text-xs font-semibold text-brand-coral hover:bg-brand-coral/20 cursor-pointer"
                                     >
                                         <Trash2 size={13} /> Delete
                                     </button>
