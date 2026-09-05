@@ -127,7 +127,7 @@ export default function AdminLogin() {
                     <button
                         type="submit"
                         disabled={submitting}
-                        className="mt-2 flex items-center justify-center gap-2 rounded-full bg-brand-ink py-3.5 text-sm font-semibold text-white transition hover:bg-brand-indigo disabled:cursor-not-allowed disabled:opacity-60"
+                        className="mt-2 flex items-center justify-center gap-2 rounded-full bg-brand-ink py-3.5 text-sm font-semibold text-white transition hover:bg-brand-indigo disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
                     >
                         {submitting ? (
                             <>
