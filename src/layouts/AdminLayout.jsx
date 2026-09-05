@@ -12,6 +12,7 @@ import {
     X,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import Modal from '../components/Modal';
 
 const NAV_ITEMS = [
     { to: '/admin/dashboard', label: 'Overview', Icon: LayoutDashboard, end: true },
@@ -27,12 +28,13 @@ export default function AdminLayout() {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
     const isSuperAdmin = user?.role === 'superadmin';
     const items = isSuperAdmin ? [...NAV_ITEMS, SUPERADMIN_ITEM] : NAV_ITEMS;
 
-    const handleLogout = () => {
+    const confirmLogout = () => {
         logout();
-        navigate('/login');
+        navigate('/admin');
     };
 
     const linkClass = ({ isActive }) =>
@@ -71,7 +73,7 @@ export default function AdminLayout() {
                     </div>
                 </div>
                 <button
-                    onClick={handleLogout}
+                    onClick={() => setLogoutConfirmOpen(true)}
                     className="mt-3 flex w-full items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-medium text-brand-coral/90 transition hover:bg-brand-coral/10"
                 >
                     <LogOut size={16} />
@@ -131,6 +133,32 @@ export default function AdminLayout() {
                     </div>
                 </main>
             </div>
+
+            {/* ── Logout confirmation ── */}
+            <Modal open={logoutConfirmOpen} onClose={() => setLogoutConfirmOpen(false)} title="Confirm Logout">
+                <div className="flex flex-col gap-5">
+                    <div className="flex items-start gap-3">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-coral/15 text-brand-coral">
+                            <LogOut size={18} />
+                        </span>
+                        <p className="pt-2 text-sm text-brand-ink/65">Are you sure you want to log out of your account?</p>
+                    </div>
+                    <div className="flex gap-2">
+                        <button
+                            onClick={() => setLogoutConfirmOpen(false)}
+                            className="flex-1 rounded-full border border-brand-ink/10 py-2.5 text-sm font-semibold text-brand-ink"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            onClick={confirmLogout}
+                            className="flex-1 rounded-full bg-brand-coral py-2.5 text-sm font-semibold text-white transition hover:brightness-95"
+                        >
+                            Log out
+                        </button>
+                    </div>
+                </div>
+            </Modal>
         </div>
     );
 }
