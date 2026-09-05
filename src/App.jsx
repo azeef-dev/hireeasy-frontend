@@ -18,6 +18,7 @@ import HowItWorks from './pages/HowItWorks';
 import FAQ from './pages/FAQ';
 import NotFound from './pages/NotFound';
 
+import AdminLogin from './pages/AdminLogin';
 import AdminLayout from './layouts/AdminLayout';
 import AdminOverview from './pages/admin/AdminOverview';
 import AdminProviders from './pages/admin/AdminProviders';
@@ -42,7 +43,7 @@ const KNOWN_ROUTES = [
 
 export default function App() {
   const location = useLocation();
-  const isAdminSection = location.pathname.startsWith('/admin/dashboard');
+  const isAdminSection = location.pathname.startsWith('/admin');
   const isKnownRoute = isAdminSection || KNOWN_ROUTES.some((path) => matchPath(path, location.pathname));
 
   return (
@@ -89,11 +90,14 @@ export default function App() {
             }
           />
 
+          {/* ── Hidden admin entrance: type /admin in the URL bar ── */}
+          <Route path="/admin" element={<AdminLogin />} />
+
           {/* ── Admin & Super Admin panel (own layout, no site navbar/footer) ── */}
           <Route
             path="/admin/dashboard"
             element={
-              <ProtectedRoute roles={['admin', 'superadmin']}>
+              <ProtectedRoute roles={['admin', 'superadmin']} redirectTo="/admin">
                 <AdminLayout />
               </ProtectedRoute>
             }
@@ -106,7 +110,7 @@ export default function App() {
             <Route
               path="admins"
               element={
-                <ProtectedRoute roles={['superadmin']}>
+                <ProtectedRoute roles={['superadmin']} redirectTo="/admin">
                   <AdminAdmins />
                 </ProtectedRoute>
               }
