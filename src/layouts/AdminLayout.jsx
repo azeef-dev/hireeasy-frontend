@@ -74,7 +74,7 @@ export default function AdminLayout() {
                 </div>
                 <button
                     onClick={() => setLogoutConfirmOpen(true)}
-                    className="mt-3 flex w-full items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-medium text-brand-coral/90 transition hover:bg-brand-coral/10"
+                    className="mt-3 flex w-full items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-medium text-brand-coral/90 transition hover:bg-brand-coral/10 cursor-pointer"
                 >
                     <LogOut size={16} />
                     Log out

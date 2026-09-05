@@ -135,7 +135,7 @@ export default function AdminAdmins() {
                 </div>
                 <button
                     onClick={() => setCreateOpen(true)}
-                    className="flex items-center gap-1.5 rounded-full bg-brand-ink px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-indigo"
+                    className="flex items-center gap-1.5 rounded-full bg-brand-ink px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-indigo cursor-pointer"
                 >
                     <Plus size={15} /> New admin
                 </button>
@@ -228,7 +228,7 @@ export default function AdminAdmins() {
                         <span className="text-sm font-medium text-brand-ink">Temporary password</span>
                         <input required type="password" minLength={6} value={createForm.password} onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })} className="input-field" />
                     </label>
-                    <button type="submit" disabled={creating} className="rounded-full bg-brand-ink py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo disabled:opacity-50">
+                    <button type="submit" disabled={creating} className="rounded-full bg-brand-ink py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo disabled:opacity-50 cursor-pointer">
                         {creating ? 'Creating…' : 'Create admin'}
                     </button>
                 </form>
