@@ -217,7 +217,7 @@ export default function AdminProviders() {
                                 )}
                                 <button
                                     onClick={() => openEdit(p)}
-                                    className="flex items-center gap-1 rounded-full border border-brand-ink/10 px-3.5 py-2 text-xs font-semibold text-brand-ink hover:border-brand-ink/25"
+                                    className="flex items-center gap-1 rounded-full border border-brand-ink/10 px-3.5 py-2 text-xs font-semibold text-brand-ink hover:border-brand-ink/25 cursor-pointer"
                                 >
                                     <Pencil size={13} /> Edit
                                 </button>
