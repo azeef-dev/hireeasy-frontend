@@ -36,10 +36,10 @@ export function AuthProvider({ children }) {
     return data;
   }, []);
 
-  const logout = useCallback(() => {
+  const logout = useCallback((options = {}) => {
     localStorage.removeItem(TOKEN_KEY);
     setUser(null);
-    toast.success('Logged out');
+    if (!options.silent) toast.success('Logged out');
   }, []);
 
   return (
