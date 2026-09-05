@@ -118,13 +118,13 @@ export default function AdminBookings() {
                             <div className="flex items-center gap-2">
                                 <button
                                     onClick={() => setViewTarget(b)}
-                                    className="flex items-center gap-1 rounded-full border border-brand-ink/10 px-3.5 py-2 text-xs font-semibold text-brand-ink hover:border-brand-ink/25"
+                                    className="flex items-center gap-1 rounded-full border border-brand-ink/10 px-3.5 py-2 text-xs font-semibold text-brand-ink hover:border-brand-ink/25 cursor-pointer"
                                 >
                                     <Eye size={13} /> View
                                 </button>
                                 <button
                                     onClick={() => setDeleteTarget(b)}
-                                    className="flex items-center gap-1 rounded-full bg-brand-coral/10 px-3.5 py-2 text-xs font-semibold text-brand-coral hover:bg-brand-coral/20"
+                                    className="flex items-center gap-1 rounded-full bg-brand-coral/10 px-3.5 py-2 text-xs font-semibold text-brand-coral hover:bg-brand-coral/20 cursor-pointer"
                                 >
                                     <Trash2 size={13} /> Delete
                                 </button>
