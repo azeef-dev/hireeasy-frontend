@@ -12,12 +12,19 @@ import ResetPassword from './pages/ResetPassword';
 import ProviderDetails from './pages/ProviderDetails';
 import CustomerDashboard from './pages/CustomerDashboard';
 import ProviderDashboard from './pages/ProviderDashboard';
-import AdminDashboard from './pages/AdminDashboard';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import HowItWorks from './pages/HowItWorks';
 import FAQ from './pages/FAQ';
 import NotFound from './pages/NotFound';
+
+import AdminLayout from './layouts/AdminLayout';
+import AdminOverview from './pages/admin/AdminOverview';
+import AdminProviders from './pages/admin/AdminProviders';
+import AdminCustomers from './pages/admin/AdminCustomers';
+import AdminBookings from './pages/admin/AdminBookings';
+import AdminReviews from './pages/admin/AdminReviews';
+import AdminAdmins from './pages/admin/AdminAdmins';
 
 const KNOWN_ROUTES = [
   '/',
@@ -27,7 +34,6 @@ const KNOWN_ROUTES = [
   '/providers/:id',
   '/dashboard',
   '/provider/dashboard',
-  '/admin/dashboard',
   '/about',
   '/contact',
   '/how-it-works',
@@ -36,7 +42,8 @@ const KNOWN_ROUTES = [
 
 export default function App() {
   const location = useLocation();
-  const isKnownRoute = KNOWN_ROUTES.some((path) => matchPath(path, location.pathname));
+  const isAdminSection = location.pathname.startsWith('/admin/dashboard');
+  const isKnownRoute = isAdminSection || KNOWN_ROUTES.some((path) => matchPath(path, location.pathname));
 
   return (
     <div className="flex min-h-screen flex-col bg-brand-paper">
@@ -53,7 +60,7 @@ export default function App() {
           error: { iconTheme: { primary: '#F0553F', secondary: '#fff' } },
         }}
       />
-      {isKnownRoute && <Navbar />}
+      {isKnownRoute && !isAdminSection && <Navbar />}
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -81,18 +88,35 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* ── Admin & Super Admin panel (own layout, no site navbar/footer) ── */}
           <Route
             path="/admin/dashboard"
             element={
               <ProtectedRoute roles={['admin', 'superadmin']}>
-                <AdminDashboard />
+                <AdminLayout />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route index element={<AdminOverview />} />
+            <Route path="providers" element={<AdminProviders />} />
+            <Route path="customers" element={<AdminCustomers />} />
+            <Route path="bookings" element={<AdminBookings />} />
+            <Route path="reviews" element={<AdminReviews />} />
+            <Route
+              path="admins"
+              element={
+                <ProtectedRoute roles={['superadmin']}>
+                  <AdminAdmins />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      {isKnownRoute && <Footer />}
+      {isKnownRoute && !isAdminSection && <Footer />}
     </div>
   );
 }
