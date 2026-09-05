@@ -93,7 +93,7 @@ export default function AdminReviews() {
                             </div>
                             <button
                                 onClick={() => setDeleteTarget(r)}
-                                className="flex shrink-0 items-center gap-1 rounded-full bg-brand-coral/10 px-3.5 py-2 text-xs font-semibold text-brand-coral hover:bg-brand-coral/20"
+                                className="flex shrink-0 items-center gap-1 rounded-full bg-brand-coral/10 px-3.5 py-2 text-xs font-semibold text-brand-coral hover:bg-brand-coral/20 cursor-pointer"
                             >
                                 <Trash2 size={13} /> Delete
                             </button>
