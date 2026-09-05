@@ -4,7 +4,7 @@ import { loginUser, registerUser, getMe } from '../api/auth';
 
 const AuthContext = createContext(null);
 
-const TOKEN_KEY = 'hireeasy_token';
+const TOKEN_KEY = import.meta.env.VITE_TOKEN_KEY;
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
