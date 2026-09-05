@@ -83,7 +83,7 @@ export default function AdminBookings() {
             </div>
 
             <div className="mt-5 flex flex-wrap items-center gap-3">
-                <div className="relative min-w-[220px] flex-1">
+                <div className="relative min-w-55 flex-1">
                     <Search size={16} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-ink/35" />
                     <input
                         value={search}
