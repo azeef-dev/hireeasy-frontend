@@ -191,7 +191,7 @@ export default function Navbar() {
           <div className="flex gap-2">
             <button
               onClick={() => setLogoutConfirmOpen(false)}
-              className="flex-1 rounded-full border border-brand-ink/10 py-2.5 text-sm font-semibold text-brand-ink"
+              className="flex-1 rounded-full border border-brand-ink/10 py-2.5 text-sm font-semibold text-brand-ink cursor-pointer"
             >
               Cancel
             </button>
