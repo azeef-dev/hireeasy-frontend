@@ -125,7 +125,7 @@ export default function Home() {
               />
               <button
                 onClick={scrollToProviders}
-                className="shrink-0 rounded-xl bg-brand-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo sm:rounded-full"
+                className="shrink-0 rounded-xl bg-brand-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo sm:rounded-full cursor-pointer"
               >
                 Search
               </button>
