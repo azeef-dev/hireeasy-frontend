@@ -27,7 +27,7 @@ import { FAQS } from '../utils/faqs';
 const STATS = [
   { label: 'Verified providers', value: '500+' },
   { label: 'Jobs completed', value: '12k+' },
-  { label: 'Avg. rating', value: '4.8★' },
+  { label: 'Avg. rating', value: '4.8', hasStar: true },
   { label: 'Cities covered', value: '6' },
 ];
 
@@ -133,7 +133,10 @@ export default function Home() {
             <div className="mt-8 grid w-full grid-cols-2 gap-4 sm:grid-cols-4">
               {STATS.map((s) => (
                 <div key={s.label}>
-                  <p className="text-xl font-bold text-white sm:text-2xl">{s.value}</p>
+                  <p className="flex items-center gap-1 text-xl font-bold text-white sm:text-2xl">
+                    {s.value}
+                    {s.hasStar && <Star size={16} className="fill-brand-marigold text-brand-marigold" />}
+                  </p>
                   <p className="text-xs text-white/60">{s.label}</p>
                 </div>
               ))}
