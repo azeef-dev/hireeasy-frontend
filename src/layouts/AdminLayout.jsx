@@ -65,7 +65,7 @@ export default function AdminLayout() {
                     </div>
                     <button
                         onClick={() => setCollapsed((c) => !c)}
-                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white/50 transition hover:bg-white/10 hover:text-white"
+                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white/50 transition hover:bg-white/10 hover:text-white cursor-pointer"
                         aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
                     >
                         {collapsed ? <ChevronRight size={15} /> : <ChevronLeft size={15} />}
