@@ -104,7 +104,7 @@ export default function AdminLayout() {
                     <div className="group relative mt-3">
                         <button
                             onClick={() => setLogoutConfirmOpen(true)}
-                            className={`flex items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-medium text-brand-coral/90 transition hover:bg-brand-coral/10 ${collapsed ? 'w-full justify-center px-0' : 'w-full'
+                            className={`flex items-center gap-2.5 rounded-xl cursor-pointer px-3.5 py-2.5 text-sm font-medium text-brand-coral/90 transition hover:bg-brand-coral/10 ${collapsed ? 'w-full justify-center px-0' : 'w-full'
                                 }`}
                         >
                             <LogOut size={16} />
