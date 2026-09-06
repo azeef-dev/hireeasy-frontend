@@ -171,16 +171,15 @@ export default function Home() {
         </Reveal>
         <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {CATEGORIES.map((c, i) => (
-            <Reveal key={c.value} delay={i * 60}>
-              <CategoryCard
-                category={c}
-                active={category === c.value}
-                onClick={() => {
-                  setCategory(category === c.value ? '' : c.value);
-                  scrollToProviders();
-                }}
-              />
-            </Reveal>
+            <CategoryCard
+              key={c.value}
+              category={c}
+              active={category === c.value}
+              onClick={() => {
+                setCategory(category === c.value ? '' : c.value);
+                scrollToProviders();
+              }}
+            />
           ))}
         </div>
       </section>
