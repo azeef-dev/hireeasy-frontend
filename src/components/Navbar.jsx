@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Dropdown } from '@heroui/react';
-import { LogOut } from 'lucide-react';
+import { LogOut, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Modal from './Modal';
 
@@ -172,14 +172,23 @@ export default function Navbar() {
         </div>
       )}
 
-      <Modal open={logoutConfirmOpen} onClose={() => setLogoutConfirmOpen(false)} title="Confirm Logout">
+      <Modal open={logoutConfirmOpen} onClose={() => setLogoutConfirmOpen(false)}>
         <div className="flex flex-col gap-5">
-          <div className="flex items-start gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-coral/15 text-brand-coral">
-              <LogOut size={18} />
+          {/* Close button top-right */}
+          <button
+            onClick={() => setLogoutConfirmOpen(false)}
+            className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full text-brand-ink/40 transition hover:bg-brand-paper hover:text-brand-ink cursor-pointer"
+          >
+            <X size={16} />
+          </button>
+
+          <div className="flex items-center gap-3">
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-coral/15 text-brand-coral">
+              <LogOut size={20} />
             </span>
-            <p className="pt-2 text-sm text-brand-ink/65">Are you sure you want to log out of your account?</p>
+            <h2 className="text-xl font-bold text-brand-ink">Confirm Logout</h2>
           </div>
+          <p className="text-sm text-brand-ink/65">Are you sure you want to log out of your account?</p>
           <div className="flex gap-2">
             <button
               onClick={() => setLogoutConfirmOpen(false)}

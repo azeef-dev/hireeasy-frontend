@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 export default function Modal({ open, onClose, title, children }) {
@@ -15,25 +16,30 @@ export default function Modal({ open, onClose, title, children }) {
 
   if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-brand-ink/40 p-0 backdrop-blur-sm sm:items-center sm:p-4">
+  return createPortal(
+    // backdrop-blur-sm → backdrop-blur-[2px] (halka blur)
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-brand-ink/40 p-0 backdrop-blur-[2px] sm:items-center sm:p-4">
       <div
-        className="max-h-[90vh] w-full overflow-y-auto rounded-t-3xl bg-white p-6 shadow-2xl sm:max-w-md sm:rounded-3xl"
+        className="relative max-h-[90vh] w-full overflow-y-auto rounded-t-3xl bg-white p-6 shadow-2xl sm:max-w-md sm:rounded-3xl"
+        //  ↑ relative add kiya taake X button absolute position le sake
         role="dialog"
         aria-modal="true"
       >
-        <div className="mb-5 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-brand-ink">{title}</h2>
-          <button
-            onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-brand-ink/50 transition hover:bg-brand-paper hover:text-brand-ink cursor-pointer"
-            aria-label="Close"
-          >
-            <X size={16} />
-          </button>
-        </div>
+        {title && (
+          <div className="mb-5 flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-brand-ink">{title}</h2>
+            <button
+              onClick={onClose}
+              className="flex h-8 w-8 items-center justify-center rounded-full text-brand-ink/50 transition hover:bg-brand-paper hover:text-brand-ink cursor-pointer"
+              aria-label="Close"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        )}
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
