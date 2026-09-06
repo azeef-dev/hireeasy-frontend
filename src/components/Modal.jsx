@@ -18,18 +18,20 @@ export default function Modal({ open, onClose, title, children }) {
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-brand-ink/40 p-0 backdrop-blur-sm sm:items-center sm:p-4">
       <div
-        className="relative max-h-[90vh] w-full overflow-y-auto rounded-t-3xl bg-white p-6 shadow-2xl sm:max-w-md sm:rounded-3xl"
+        className="max-h-[90vh] w-full overflow-y-auto rounded-t-3xl bg-white p-6 shadow-2xl sm:max-w-md sm:rounded-3xl"
         role="dialog"
         aria-modal="true"
       >
-        <button
-          onClick={onClose}
-          className="absolute right-5 top-5 flex h-8 w-8 items-center justify-center rounded-full text-brand-ink/50 transition hover:bg-brand-paper hover:text-brand-ink"
-          aria-label="Close"
-        >
-          <X size={16} />
-        </button>
-        {title && <h2 className="mb-5 pr-10 text-lg font-semibold text-brand-ink">{title}</h2>}
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-brand-ink">{title}</h2>
+          <button
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-full text-brand-ink/50 transition hover:bg-brand-paper hover:text-brand-ink cursor-pointer"
+            aria-label="Close"
+          >
+            <X size={16} />
+          </button>
+        </div>
         {children}
       </div>
     </div>
