@@ -51,39 +51,40 @@ export default function AdminLayout() {
                 className={`hidden shrink-0 flex-col bg-brand-ink py-6 transition-all duration-200 lg:flex ${collapsed ? 'w-20 px-2' : 'w-64 px-4'
                     }`}
             >
-                <div className={`flex items-center gap-2 px-2 ${collapsed ? 'justify-center px-0' : ''}`}>
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-marigold text-base font-bold text-brand-ink">
-                        H
-                    </span>
-                    {!collapsed && (
-                        <div className="min-w-0">
-                            <p className="truncate text-sm font-bold text-white">HireEasy</p>
-                            <p className="truncate text-[11px] text-white/50">{isSuperAdmin ? 'Super Admin' : 'Admin'} Panel</p>
-                        </div>
-                    )}
+                <div className={`flex items-center px-2 ${collapsed ? 'flex-col gap-2' : 'justify-between gap-2'}`}>
+                    <div className={`flex items-center gap-2 ${collapsed ? 'flex-col' : 'min-w-0'}`}>
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-brand-marigold text-base font-bold text-brand-ink">
+                            H
+                        </span>
+                        {!collapsed && (
+                            <div className="min-w-0">
+                                <p className="truncate text-sm font-bold text-white">HireEasy</p>
+                                <p className="truncate text-[11px] text-white/50">{isSuperAdmin ? 'Super Admin' : 'Admin'} Panel</p>
+                            </div>
+                        )}
+                    </div>
+                    <button
+                        onClick={() => setCollapsed((c) => !c)}
+                        className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-white/50 transition hover:bg-white/10 hover:text-white"
+                        aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+                    >
+                        {collapsed ? <ChevronRight size={15} /> : <ChevronLeft size={15} />}
+                    </button>
                 </div>
 
-                <button
-                    onClick={() => setCollapsed((c) => !c)}
-                    className={`mt-4 flex h-8 w-8 items-center justify-center rounded-lg text-white/50 transition hover:bg-white/5 hover:text-white ${collapsed ? 'self-center' : 'self-end'
-                        }`}
-                    aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-                >
-                    {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
-                </button>
-
-                <nav className="mt-4 flex flex-1 flex-col gap-1">
+                <nav className="mt-6 flex flex-1 flex-col gap-1">
                     {items.map((item) => (
-                        <NavLink
-                            key={item.to}
-                            to={item.to}
-                            end={item.end}
-                            className={linkClass}
-                            title={collapsed ? item.label : undefined}
-                        >
-                            <item.Icon size={18} strokeWidth={1.8} />
-                            {!collapsed && item.label}
-                        </NavLink>
+                        <div key={item.to} className="group relative">
+                            <NavLink to={item.to} end={item.end} className={linkClass}>
+                                <item.Icon size={18} strokeWidth={1.8} />
+                                {!collapsed && item.label}
+                            </NavLink>
+                            {collapsed && (
+                                <span className="pointer-events-none absolute left-full top-1/2 z-50 ml-2 -translate-y-1/2 whitespace-nowrap rounded-lg bg-brand-indigo px-2.5 py-1.5 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100">
+                                    {item.label}
+                                </span>
+                            )}
+                        </div>
                     ))}
                 </nav>
 
@@ -99,15 +100,22 @@ export default function AdminLayout() {
                             </div>
                         )}
                     </div>
-                    <button
-                        onClick={() => setLogoutConfirmOpen(true)}
-                        className={`mt-3 flex items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-medium text-brand-coral/90 transition hover:bg-brand-coral/10 ${collapsed ? 'w-full justify-center px-0' : 'w-full'
-                            }`}
-                        title={collapsed ? 'Log out' : undefined}
-                    >
-                        <LogOut size={16} />
-                        {!collapsed && 'Log out'}
-                    </button>
+
+                    <div className="group relative mt-3">
+                        <button
+                            onClick={() => setLogoutConfirmOpen(true)}
+                            className={`flex items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-medium text-brand-coral/90 transition hover:bg-brand-coral/10 ${collapsed ? 'w-full justify-center px-0' : 'w-full'
+                                }`}
+                        >
+                            <LogOut size={16} />
+                            {!collapsed && 'Log out'}
+                        </button>
+                        {collapsed && (
+                            <span className="pointer-events-none absolute left-full top-1/2 z-50 ml-2 -translate-y-1/2 whitespace-nowrap rounded-lg bg-brand-indigo px-2.5 py-1.5 text-xs font-semibold text-white opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100">
+                                Log out
+                            </span>
+                        )}
+                    </div>
                 </div>
             </aside>
 
@@ -164,7 +172,7 @@ export default function AdminLayout() {
                             </div>
                             <button
                                 onClick={() => setLogoutConfirmOpen(true)}
-                                className="mt-3 flex w-full items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-medium text-brand-coral/90 transition hover:bg-brand-coral/10 cursor-pointer"
+                                className="mt-3 flex w-full items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-sm font-medium text-brand-coral/90 transition hover:bg-brand-coral/10"
                             >
                                 <LogOut size={16} />
                                 Log out
@@ -218,7 +226,7 @@ export default function AdminLayout() {
                         </button>
                         <button
                             onClick={confirmLogout}
-                            className="flex-1 rounded-full bg-brand-coral py-2.5 text-sm font-semibold text-white transition hover:brightness-95"
+                            className="flex-1 rounded-full bg-brand-coral py-2.5 text-sm font-semibold text-white transition hover:brightness-95 cursor-pointer"
                         >
                             Log out
                         </button>
