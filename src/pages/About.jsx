@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { Handshake, Scale, Home } from 'lucide-react';
+import { Handshake, Scale, Home, Star } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
 
 const STATS = [
     { label: 'Verified providers', value: '500+' },
     { label: 'Jobs completed', value: '12k+' },
     { label: 'Cities covered', value: '6' },
-    { label: 'Avg. rating', value: '4.8★' },
+    { label: 'Avg. rating', value: '4.8', hasStar: true },
 ];
 
 const VALUES = [
@@ -38,7 +38,10 @@ export default function About() {
                 <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
                     {STATS.map((s) => (
                         <div key={s.label} className="rounded-2xl bg-white p-6 text-center shadow-sm">
-                            <p className="text-2xl font-bold text-brand-ink">{s.value}</p>
+                            <p className="flex items-center justify-center gap-1 text-2xl font-bold text-brand-ink">
+                                {s.value}
+                                {s.hasStar && <Star size={18} className="fill-brand-marigold text-brand-marigold" />}
+                            </p>
                             <p className="mt-1 text-xs text-brand-ink/50">{s.label}</p>
                         </div>
                     ))}
