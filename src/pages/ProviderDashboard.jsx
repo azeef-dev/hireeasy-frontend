@@ -348,7 +348,7 @@ export default function ProviderDashboard() {
           <button
             type="submit"
             disabled={savingProfile}
-            className="col-span-full rounded-full bg-brand-ink py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo disabled:opacity-50"
+            className="col-span-full rounded-full bg-brand-ink py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo disabled:opacity-50 cursor-pointer"
           >
             {savingProfile ? 'Saving…' : 'Save profile'}
           </button>
