@@ -114,7 +114,7 @@ export default function Footer() {
             </div>
             <button
               type="submit"
-              className="inline-flex items-center gap-2 shrink-0 rounded-2xl bg-brand-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo"
+              className="inline-flex items-center gap-2 shrink-0 rounded-2xl bg-brand-ink px-5 py-3 text-sm font-semibold text-white transition hover:bg-brand-indigo cursor-pointer"
             >
               <span>Subscribe</span>
               <Send size={15} />
