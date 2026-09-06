@@ -197,7 +197,7 @@ export default function Navbar() {
             </button>
             <button
               onClick={confirmLogout}
-              className="flex-1 rounded-full bg-brand-coral py-2.5 text-sm font-semibold text-white transition hover:brightness-95"
+              className="flex-1 rounded-full bg-brand-coral py-2.5 text-sm font-semibold text-white transition hover:brightness-95 cursor-pointer"
             >
               Log out
             </button>
