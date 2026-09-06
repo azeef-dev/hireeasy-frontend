@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Dropdown } from '@heroui/react';
+import { LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import Modal from './Modal';
 
 const DASHBOARD_PATH = {
   user: '/dashboard',
@@ -22,13 +24,17 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false);
 
   const handleAction = (key) => {
     if (key === 'dashboard') navigate(DASHBOARD_PATH[user.role]);
-    if (key === 'logout') {
-      logout();
-      navigate('/');
-    }
+    if (key === 'logout') setLogoutConfirmOpen(true);
+  };
+
+  const confirmLogout = () => {
+    logout();
+    setLogoutConfirmOpen(false);
+    navigate('/');
   };
 
   const closeMobile = () => setMobileOpen(false);
@@ -165,6 +171,31 @@ export default function Navbar() {
           )}
         </div>
       )}
+
+      <Modal open={logoutConfirmOpen} onClose={() => setLogoutConfirmOpen(false)} title="Confirm Logout">
+        <div className="flex flex-col gap-5">
+          <div className="flex items-start gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-coral/15 text-brand-coral">
+              <LogOut size={18} />
+            </span>
+            <p className="pt-2 text-sm text-brand-ink/65">Are you sure you want to log out of your account?</p>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setLogoutConfirmOpen(false)}
+              className="flex-1 rounded-full border border-brand-ink/10 py-2.5 text-sm font-semibold text-brand-ink"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={confirmLogout}
+              className="flex-1 rounded-full bg-brand-coral py-2.5 text-sm font-semibold text-white transition hover:brightness-95"
+            >
+              Log out
+            </button>
+          </div>
+        </div>
+      </Modal>
     </header>
   );
 }
