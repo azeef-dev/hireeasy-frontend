@@ -15,7 +15,7 @@ export default function FaqAccordion({ items }) {
                     >
                         <button
                             onClick={() => setOpenIndex(isOpen ? -1 : i)}
-                            className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
+                            className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left cursor-pointer"
                         >
                             <span className="text-sm font-semibold text-brand-ink sm:text-base">{item.question}</span>
                             <span
