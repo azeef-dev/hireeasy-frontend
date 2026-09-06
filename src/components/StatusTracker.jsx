@@ -1,3 +1,5 @@
+import { Check } from 'lucide-react';
+
 const STEPS = [
   { key: 'pending', label: 'Requested' },
   { key: 'accepted', label: 'Accepted' },
@@ -26,15 +28,14 @@ export default function StatusTracker({ status }) {
           <div key={step.key} className="flex items-center">
             <div className="flex flex-col items-center gap-1.5">
               <div
-                className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-semibold transition-colors ${
-                  done
-                    ? 'bg-brand-teal text-white'
-                    : active
-                      ? 'bg-brand-marigold text-brand-ink'
-                      : 'bg-brand-ink/10 text-brand-ink/40'
-                }`}
+                className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-semibold transition-colors ${done
+                  ? 'bg-brand-teal text-white'
+                  : active
+                    ? 'bg-brand-marigold text-brand-ink'
+                    : 'bg-brand-ink/10 text-brand-ink/40'
+                  }`}
               >
-                {done ? '✓' : i + 1}
+                {done ? <Check size={12} strokeWidth={3} /> : i + 1}
               </div>
               <span
                 className={`text-[11px] font-medium whitespace-nowrap ${active ? 'text-brand-ink' : 'text-brand-ink/40'}`}
