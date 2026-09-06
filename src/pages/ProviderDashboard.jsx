@@ -142,8 +142,8 @@ export default function ProviderDashboard() {
     return (
       <div className="mx-auto max-w-2xl px-5 py-16 text-center">
         <div className="rounded-2xl bg-white p-10 shadow-sm">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-marigold/15 text-2xl">
-            ⏳
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-marigold/15 text-[#a35e00]">
+            <Clock size={26} strokeWidth={1.8} />
           </div>
           <h1 className="mt-4 text-xl font-bold text-brand-ink">Your profile is under review</h1>
           <p className="mt-2 text-sm text-brand-ink/55">
@@ -204,7 +204,7 @@ export default function ProviderDashboard() {
       {tab === 'bookings' && (
         <div className="mt-6">
           <div className="flex flex-wrap items-center gap-3">
-            <div className="relative min-w-55 flex-1">
+            <div className="relative min-w-[220px] flex-1">
               <Search size={16} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-ink/35" />
               <input
                 value={search}
