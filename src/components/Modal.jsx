@@ -17,11 +17,9 @@ export default function Modal({ open, onClose, title, children }) {
   if (!open) return null;
 
   return createPortal(
-    // backdrop-blur-sm → backdrop-blur-[2px] (halka blur)
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-brand-ink/40 p-0 backdrop-blur-[2px] sm:items-center sm:p-4">
       <div
         className="relative max-h-[90vh] w-full overflow-y-auto rounded-t-3xl bg-white p-6 shadow-2xl sm:max-w-md sm:rounded-3xl"
-        //  ↑ relative add kiya taake X button absolute position le sake
         role="dialog"
         aria-modal="true"
       >
