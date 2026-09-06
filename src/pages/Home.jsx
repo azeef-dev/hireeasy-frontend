@@ -20,6 +20,7 @@ import SectionHeading from '../components/SectionHeading';
 import CategoryCard from '../components/CategoryCard';
 import TestimonialCard from '../components/TestimonialCard';
 import FaqAccordion from '../components/FaqAccordion';
+import Reveal from '../components/Reveal';
 import { CATEGORIES } from '../utils/categories';
 import { TESTIMONIALS } from '../utils/testimonials';
 import { FAQS } from '../utils/faqs';
@@ -161,22 +162,25 @@ export default function Home() {
 
       {/* ── CATEGORIES ── */}
       <section className="mx-auto max-w-6xl px-5 py-16">
-        <SectionHeading
-          eyebrow="Popular categories"
-          title="Whatever the job, there's a pro for it"
-          subtitle="Tap a category to instantly filter providers near you."
-        />
+        <Reveal>
+          <SectionHeading
+            eyebrow="Popular categories"
+            title="Whatever the job, there's a pro for it"
+            subtitle="Tap a category to instantly filter providers near you."
+          />
+        </Reveal>
         <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {CATEGORIES.map((c) => (
-            <CategoryCard
-              key={c.value}
-              category={c}
-              active={category === c.value}
-              onClick={() => {
-                setCategory(category === c.value ? '' : c.value);
-                scrollToProviders();
-              }}
-            />
+          {CATEGORIES.map((c, i) => (
+            <Reveal key={c.value} delay={i * 60}>
+              <CategoryCard
+                category={c}
+                active={category === c.value}
+                onClick={() => {
+                  setCategory(category === c.value ? '' : c.value);
+                  scrollToProviders();
+                }}
+              />
+            </Reveal>
           ))}
         </div>
       </section>
@@ -184,21 +188,25 @@ export default function Home() {
       {/* ── HOW IT WORKS (mini) ── */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-6xl px-5">
-          <SectionHeading
-            eyebrow="How it works"
-            title="Booking help shouldn't be a hassle"
-            subtitle="From search to a job well done, in four simple steps."
-          />
+          <Reveal>
+            <SectionHeading
+              eyebrow="How it works"
+              title="Booking help shouldn't be a hassle"
+              subtitle="From search to a job well done, in four simple steps."
+            />
+          </Reveal>
           <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((step, i) => (
-              <div key={step.title} className="rounded-2xl bg-brand-paper p-6">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-sm">
-                  <step.Icon size={22} className="text-brand-indigo" strokeWidth={1.8} />
-                </span>
-                <p className="mt-4 text-xs font-semibold text-brand-marigold">STEP {i + 1}</p>
-                <p className="mt-1 font-semibold text-brand-ink">{step.title}</p>
-                <p className="mt-1.5 text-sm text-brand-ink/55">{step.desc}</p>
-              </div>
+              <Reveal key={step.title} delay={i * 80}>
+                <div className="rounded-2xl bg-brand-paper p-6">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white shadow-sm">
+                    <step.Icon size={22} className="text-brand-indigo" strokeWidth={1.8} />
+                  </span>
+                  <p className="mt-4 text-xs font-semibold text-brand-marigold">STEP {i + 1}</p>
+                  <p className="mt-1 font-semibold text-brand-ink">{step.title}</p>
+                  <p className="mt-1.5 text-sm text-brand-ink/55">{step.desc}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
           <div className="mt-8 text-center">
@@ -215,16 +223,18 @@ export default function Home() {
 
       {/* ── PROVIDER GRID ── */}
       <section id="providers" className="mx-auto max-w-6xl scroll-mt-20 px-5 py-16">
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="text-2xl font-bold text-brand-ink">
-              {category ? category : 'All'} providers near you
-            </h2>
-            <p className="mt-1 text-sm text-brand-ink/50">
-              {loading ? 'Loading…' : `${providers.length} provider${providers.length === 1 ? '' : 's'} found`}
-            </p>
+        <Reveal>
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-bold text-brand-ink">
+                {category ? category : 'All'} providers near you
+              </h2>
+              <p className="mt-1 text-sm text-brand-ink/50">
+                {loading ? 'Loading…' : `${providers.length} provider${providers.length === 1 ? '' : 's'} found`}
+              </p>
+            </div>
           </div>
-        </div>
+        </Reveal>
 
         {loading ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -245,26 +255,27 @@ export default function Home() {
       {/* ── WHY CHOOSE US ── */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-6xl px-5">
-          <SectionHeading
-            eyebrow="Why HireEasy"
-            title="Built so you never have to guess"
-            subtitle="We handle the vetting, tracking, and accountability so you don't have to."
-          />
+          <Reveal>
+            <SectionHeading
+              eyebrow="Why HireEasy"
+              title="Built so you never have to guess"
+              subtitle="We handle the vetting, tracking, and accountability so you don't have to."
+            />
+          </Reveal>
           <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {WHY_US.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-2xl border border-brand-ink/8 p-6 transition hover:-translate-y-1 hover:shadow-lg"
-              >
-                <span
-                  className="flex h-12 w-12 items-center justify-center rounded-full"
-                  style={{ backgroundColor: `${item.color}1A` }}
-                >
-                  <item.Icon size={22} style={{ color: item.color }} strokeWidth={1.8} />
-                </span>
-                <p className="mt-4 font-semibold text-brand-ink">{item.title}</p>
-                <p className="mt-1.5 text-sm text-brand-ink/55">{item.desc}</p>
-              </div>
+            {WHY_US.map((item, i) => (
+              <Reveal key={item.title} delay={i * 80}>
+                <div className="rounded-2xl border border-brand-ink/8 p-6 transition hover:-translate-y-1 hover:shadow-lg">
+                  <span
+                    className="flex h-12 w-12 items-center justify-center rounded-full"
+                    style={{ backgroundColor: `${item.color}1A` }}
+                  >
+                    <item.Icon size={22} style={{ color: item.color }} strokeWidth={1.8} />
+                  </span>
+                  <p className="mt-4 font-semibold text-brand-ink">{item.title}</p>
+                  <p className="mt-1.5 text-sm text-brand-ink/55">{item.desc}</p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -272,13 +283,17 @@ export default function Home() {
 
       {/* ── TESTIMONIALS ── */}
       <section className="mx-auto max-w-6xl px-5 py-16">
-        <SectionHeading
-          eyebrow="Testimonials"
-          title="Loved by customers and providers alike"
-        />
+        <Reveal>
+          <SectionHeading
+            eyebrow="Testimonials"
+            title="Loved by customers and providers alike"
+          />
+        </Reveal>
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {TESTIMONIALS.map((t) => (
-            <TestimonialCard key={t.name} testimonial={t} />
+          {TESTIMONIALS.map((t, i) => (
+            <Reveal key={t.name} delay={i * 80}>
+              <TestimonialCard testimonial={t} />
+            </Reveal>
           ))}
         </div>
       </section>
@@ -286,10 +301,14 @@ export default function Home() {
       {/* ── FAQ PREVIEW ── */}
       <section className="bg-white py-16">
         <div className="mx-auto max-w-3xl px-5">
-          <SectionHeading eyebrow="FAQs" title="Got questions?" />
-          <div className="mt-8">
-            <FaqAccordion items={FAQS.slice(0, 4)} />
-          </div>
+          <Reveal>
+            <SectionHeading eyebrow="FAQs" title="Got questions?" />
+          </Reveal>
+          <Reveal delay={100}>
+            <div className="mt-8">
+              <FaqAccordion items={FAQS.slice(0, 4)} />
+            </div>
+          </Reveal>
           <div className="mt-6 text-center">
             <Link
               to="/faq"
@@ -304,23 +323,25 @@ export default function Home() {
 
       {/* ── BECOME A PROVIDER CTA ── */}
       <section className="mx-auto max-w-6xl px-5 py-16">
-        <div className="relative overflow-hidden rounded-3xl bg-brand-ink px-8 py-12 text-center sm:px-16">
-          <div className="pointer-events-none absolute -left-10 -top-10 h-56 w-56 rounded-full bg-brand-marigold/10 blur-3xl" aria-hidden />
-          <div className="pointer-events-none absolute -bottom-16 right-0 h-56 w-56 rounded-full bg-brand-teal/10 blur-3xl" aria-hidden />
-          <h2 className="relative text-2xl font-bold text-white sm:text-3xl">
-            Are you an electrician, plumber, or cleaner?
-          </h2>
-          <p className="relative mx-auto mt-3 max-w-lg text-sm text-white/65">
-            Join HireEasy to get consistent bookings from customers actively looking for your
-            service — no cold calling required.
-          </p>
-          <Link
-            to="/register"
-            className="relative mt-6 inline-block rounded-full bg-brand-marigold px-7 py-3 text-sm font-semibold text-brand-ink transition hover:brightness-105"
-          >
-            Become a provider
-          </Link>
-        </div>
+        <Reveal>
+          <div className="relative overflow-hidden rounded-3xl bg-brand-ink px-8 py-12 text-center sm:px-16">
+            <div className="pointer-events-none absolute -left-10 -top-10 h-56 w-56 rounded-full bg-brand-marigold/10 blur-3xl" aria-hidden />
+            <div className="pointer-events-none absolute -bottom-16 right-0 h-56 w-56 rounded-full bg-brand-teal/10 blur-3xl" aria-hidden />
+            <h2 className="relative text-2xl font-bold text-white sm:text-3xl">
+              Are you an electrician, plumber, or cleaner?
+            </h2>
+            <p className="relative mx-auto mt-3 max-w-lg text-sm text-white/65">
+              Join HireEasy to get consistent bookings from customers actively looking for your
+              service — no cold calling required.
+            </p>
+            <Link
+              to="/register"
+              className="relative mt-6 inline-block rounded-full bg-brand-marigold px-7 py-3 text-sm font-semibold text-brand-ink transition hover:brightness-105"
+            >
+              Become a provider
+            </Link>
+          </div>
+        </Reveal>
       </section>
     </div>
   );
