@@ -93,7 +93,7 @@ export default function ProviderDetails() {
           </div>
           <button
             onClick={openBooking}
-            className="rounded-full bg-brand-marigold px-6 py-3 text-sm font-semibold text-brand-ink transition hover:brightness-105"
+            className="rounded-full bg-brand-marigold px-6 py-3 text-sm font-semibold text-brand-ink transition hover:brightness-105 cursor-pointer"
           >
             Book now
           </button>
