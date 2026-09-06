@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Skeleton from 'react-loading-skeleton';
+import { Lock } from 'lucide-react';
 import { getProviderById } from '../api/providers';
 import { getProviderReviews } from '../api/reviews';
 import { createBooking } from '../api/bookings';
@@ -35,7 +36,7 @@ export default function ProviderDetails() {
 
   const openBooking = () => {
     if (!user) {
-      toast('Log in to book a provider', { icon: '🔒' });
+      toast('Log in to book a provider', { icon: <Lock size={16} className="text-brand-indigo" /> });
       navigate('/login');
       return;
     }
