@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Star } from 'lucide-react';
 import { getMyBookings } from '../api/bookings';
 import { createReview } from '../api/reviews';
 import BookingCard from '../components/BookingCard';
@@ -107,14 +107,12 @@ export default function CustomerDashboard() {
             <span className="text-sm font-medium text-brand-ink">Your rating</span>
             <div className="mt-2 flex gap-1.5">
               {[1, 2, 3, 4, 5].map((n) => (
-                <button
-                  type="button"
-                  key={n}
-                  onClick={() => setRating(n)}
-                  className="text-3xl leading-none"
-                  aria-label={`${n} star`}
-                >
-                  <span style={{ color: n <= rating ? '#FFB020' : '#E4E4EC' }}>★</span>
+                <button type="button" key={n} onClick={() => setRating(n)} aria-label={`${n} star`}>
+                  <Star
+                    size={30}
+                    fill={n <= rating ? '#FFB020' : '#E4E4EC'}
+                    color={n <= rating ? '#FFB020' : '#E4E4EC'}
+                  />
                 </button>
               ))}
             </div>
