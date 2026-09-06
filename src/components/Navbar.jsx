@@ -174,7 +174,6 @@ export default function Navbar() {
 
       <Modal open={logoutConfirmOpen} onClose={() => setLogoutConfirmOpen(false)}>
         <div className="flex flex-col gap-5">
-          {/* Close button top-right */}
           <button
             onClick={() => setLogoutConfirmOpen(false)}
             className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full text-brand-ink/40 transition hover:bg-brand-paper hover:text-brand-ink cursor-pointer"
