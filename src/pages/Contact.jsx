@@ -141,10 +141,11 @@ export default function Contact() {
                         </div>
 
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-xs font-semibold tracking-wide text-brand-ink/70">MESSAGE</label>
+                            <label htmlFor='message' className="text-xs font-semibold tracking-wide text-brand-ink/70">MESSAGE</label>
                             <div className="relative">
                                 <MessageSquare size={17} className="pointer-events-none absolute left-3.5 top-3.5 text-brand-ink/35" />
                                 <textarea
+                                    id='message'
                                     rows={5}
                                     value={form.message}
                                     onChange={update('message')}
