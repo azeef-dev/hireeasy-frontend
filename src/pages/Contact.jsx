@@ -120,11 +120,12 @@ export default function Contact() {
                         </div>
 
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-xs font-semibold tracking-wide text-brand-ink/70">EMAIL</label>
+                            <label htmlFor='mail' className="text-xs font-semibold tracking-wide text-brand-ink/70">EMAIL</label>
                             <div className="relative flex items-center">
                                 <Mail size={17} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
                                 <input
                                     type="email"
+                                    id='mail'
                                     value={form.email}
                                     onChange={update('email')}
                                     onBlur={handleBlur('email')}
