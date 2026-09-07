@@ -386,7 +386,7 @@ export default function Register() {
               <button
                 type="button"
                 onClick={() => setRole('user')}
-                className={`flex flex-col items-start gap-1.5 rounded-2xl border p-4 text-left transition ${role === 'user'
+                className={`flex flex-col items-start gap-1.5 cursor-pointer rounded-2xl border p-4 text-left transition ${role === 'user'
                   ? 'border-brand-indigo bg-brand-indigo/5 ring-2 ring-brand-indigo/20'
                   : 'border-brand-ink/10 bg-white hover:border-brand-ink/20'
                   }`}
