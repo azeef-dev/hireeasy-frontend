@@ -102,10 +102,11 @@ export default function Contact() {
 
                     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4 rounded-3xl bg-white p-8 shadow-sm">
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-xs font-semibold tracking-wide text-brand-ink/70">FULL NAME</label>
+                            <label htmlFor='name' className="text-xs font-semibold tracking-wide text-brand-ink/70">FULL NAME</label>
                             <div className="relative flex items-center">
                                 <User size={17} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
                                 <input
+                                    id='name'
                                     value={form.name}
                                     onChange={update('name')}
                                     onBlur={handleBlur('name')}
