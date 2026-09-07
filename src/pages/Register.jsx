@@ -654,7 +654,7 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="group mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-ink py-3 text-sm font-semibold text-white shadow-lg shadow-brand-ink/10 transition hover:bg-brand-indigo hover:shadow-brand-indigo/20 disabled:cursor-not-allowed disabled:opacity-60"
+                className="group mt-1 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-ink py-3 text-sm font-semibold text-white shadow-lg shadow-brand-ink/10 transition hover:bg-brand-indigo hover:shadow-brand-indigo/20 disabled:cursor-not-allowed disabled:opacity-60 cursor-pointer"
               >
                 {submitting ? (
                   <>
