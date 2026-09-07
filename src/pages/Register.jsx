@@ -596,12 +596,13 @@ export default function Register() {
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-semibold text-brand-ink/70">
+                      <label htmlFor='price' className="text-xs font-semibold text-brand-ink/70">
                         STARTING PRICE (RS)
                       </label>
                       <div className="relative flex items-center">
                         <DollarSign size={15} className="pointer-events-none absolute left-3 text-brand-ink/35" />
                         <input
+                          id='price'
                           value={form.price}
                           onChange={updateNumberField('price')}
                           onBlur={handleBlur('price')}
