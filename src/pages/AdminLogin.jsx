@@ -99,10 +99,11 @@ export default function AdminLogin() {
                     </div>
 
                     <div className="flex flex-col gap-1.5">
-                        <label className="text-sm font-semibold text-brand-ink">Password</label>
+                        <label htmlFor='pass' className="text-sm font-semibold text-brand-ink">Password</label>
                         <div className="relative flex items-center">
                             <Lock size={17} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
                             <input
+                                id='pass'
                                 type={showPassword ? 'text' : 'password'}
                                 value={form.password}
                                 onChange={handleChange('password')}
