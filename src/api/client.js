@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL;
+const TOKEN_KEY = import.meta.env.VITE_TOKEN_KEY;
 
 const api = axios.create({
   baseURL: API_URL,
@@ -8,14 +9,13 @@ const api = axios.create({
 
 // Attach the JWT (if we have one) to every request
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('hireeasy_token');
+  const token = localStorage.getItem(TOKEN_KEY);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
 
-// Surface a consistent error message no matter what the API sends back
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -24,6 +24,13 @@ api.interceptors.response.use(
       error.response?.data?.errors?.[0]?.message ||
       error.message ||
       'Something went wrong';
+
+    if (error.response?.status === 401 && localStorage.getItem(TOKEN_KEY)) {
+      localStorage.removeItem(TOKEN_KEY);
+      const isAdminArea = window.location.pathname.startsWith('/admin');
+      window.location.href = isAdminArea ? '/admin' : '/login';
+    }
+
     return Promise.reject(new Error(message));
   }
 );
