@@ -475,12 +475,13 @@ export default function Register() {
 
               {/* Email */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold tracking-wide text-brand-ink/70">
+                <label htmlFor='mail' className="text-xs font-semibold tracking-wide text-brand-ink/70">
                   EMAIL ADDRESS
                 </label>
                 <div className="relative flex items-center">
                   <Mail size={17} className="pointer-events-none absolute left-3.5 text-brand-ink/35" />
                   <input
+                    id='mail'
                     type="email"
                     value={form.email}
                     onChange={update('email')}
