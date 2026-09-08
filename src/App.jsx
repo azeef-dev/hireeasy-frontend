@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation, matchPath } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import { SpeedInsights } from '@vercel/speed-insights/react';  // ✅ ADD THIS
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -49,6 +50,7 @@ export default function App() {
   return (
     <div className="flex min-h-screen flex-col bg-brand-paper">
       <ScrollToTop />
+      <SpeedInsights />  {/* ✅ ADD THIS */}
       <Toaster
         position="top-center"
         toastOptions={{
@@ -89,11 +91,7 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-
-          {/* ── Hidden admin entrance: type /admin in the URL bar ── */}
           <Route path="/admin" element={<AdminLogin />} />
-
-          {/* ── Admin & Super Admin panel (own layout, no site navbar/footer) ── */}
           <Route
             path="/admin/dashboard"
             element={
@@ -116,7 +114,6 @@ export default function App() {
               }
             />
           </Route>
-
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
