@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation, matchPath } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { SpeedInsights } from '@vercel/speed-insights/react';  // ✅ ADD THIS
+import { SpeedInsights } from '@vercel/speed-insights/react';  
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -50,7 +50,7 @@ export default function App() {
   return (
     <div className="flex min-h-screen flex-col bg-brand-paper">
       <ScrollToTop />
-      <SpeedInsights />  {/* ✅ ADD THIS */}
+      <SpeedInsights />  
       <Toaster
         position="top-center"
         toastOptions={{
